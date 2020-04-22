@@ -4,6 +4,10 @@
 
 # 编译
 
+需要：
+1. python3
+2. expect
+
 在编译前，需要修改build-env中的配置
 
 ```
