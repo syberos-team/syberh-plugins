@@ -1,0 +1,2 @@
+SYBERH_APP=$HOME/workspace/syberh/abeir/syberh/packages/syberos
+TARGET_NAME=target-armv7tnhl-os4_1_1
