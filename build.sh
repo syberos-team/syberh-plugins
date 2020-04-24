@@ -45,7 +45,7 @@ get_sop_full_path(){
 exec_build(){
     pro_path=${pro_path//'[[project]]'/$project_name}
     build_path=${build_path//'[[project]]'/$project_name}
-    python3 ./syberh-build.py build -b $build_path -p $pro_path -d $pdk_path -t $TARGET_NAME -n $cpu_num --args SYBERH_APP=$SYBERH_APP
+    python3 ./syberh-build.py build -b $build_path -p $pro_path -d $pdk_path -t $TARGET_NAME -n $cpu_num --args SYBERH_APP=$SYBERH_APP --args SOPID=$SOPID
 }
 
 exec_clear(){
