@@ -118,7 +118,7 @@ def build(args):
 def clear(args):
     if os.path.exists(args.build_path):
         print('开始清理目录：' + args.build_path)
-        time.sleep(2)
+        time.sleep(1)
         os.system('rm -rf ' + args.build_path + '/*')
     else:
         print('清理的目录不存在：' + args.build_path)

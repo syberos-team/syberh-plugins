@@ -7,7 +7,6 @@
 
 using namespace NativeSdk;
 
-int Storage::typeId = qRegisterMetaType<Storage *>();
 
 Storage::Storage()
 {

@@ -12,6 +12,7 @@ TEMPLATE = lib
 
 DEFINES += STORAGE_LIBRARY
 
+CONFIG += plugin
 CONFIG += c++11
 CONFIG += link_pkgconfig
 

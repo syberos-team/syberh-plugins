@@ -17,6 +17,7 @@ HEADERS += path.h\
         path_global.h 
 
 CONFIG += C++11
+CONFIG += plugin
 
 
 INCLUDEPATH += $$absolute_path("nativesdk/src", $$SYBERH_APP)

@@ -11,6 +11,7 @@ TEMPLATE = lib
 
 CONFIG += link_pkgconfig
 CONFIG += C++11
+CONFIG += plugin
 
 DEFINES += BATTERY_LIBRARY
 

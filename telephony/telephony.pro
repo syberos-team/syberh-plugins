@@ -11,6 +11,9 @@ TEMPLATE = lib
 
 DEFINES += TELEPHONY_LIBRARY
 
+CONFIG += plugin
+CONFIG += c++11
+
 SOURCES += telephony.cpp
 
 HEADERS += telephony.h\

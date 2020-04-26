@@ -9,6 +9,9 @@ QT       += widgets
 TARGET = filemanager
 TEMPLATE = lib
 
+CONFIG += plugin
+CONFIG += c++11
+
 DEFINES += FILEMANAGER_LIBRARY
 
 SOURCES += filemanager.cpp 

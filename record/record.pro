@@ -13,6 +13,7 @@ DEFINES += RECORD_LIBRARY
 
 CONFIG += link_pkgconfig
 CONFIG += C++11
+CONFIG += plugin
 
 PKGCONFIG += syberos-qt
 

@@ -47,8 +47,6 @@ public:
      */
     void getAllKeys(QString callbackId);
 
-    static int typeId;
-
 private:
     CCryptoStorageManager* manager;
     /**
