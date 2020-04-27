@@ -27,10 +27,11 @@ cmd_name=`basename $0`
 usage(){
     echo "Usage: $cmd_name [options]"
     echo ''
-    echo '  -b    执行编译'
-    echo '  -c    执行清理'
-    echo '  -i    安装sop包，在编译输出目录中查找sop包'
-    echo '  -n    将sop更改后缀名'
+    echo '  -b    执行编译，参数为插件项目名'
+    echo '  -c    执行清理，参数为插件项目名'
+    echo '  -i    安装sop包，在编译输出目录中查找sop包，参数为插件项目名'
+    echo '  -n    将sop更改后缀名，参数为插件项目名'
+    echo '  -s    使用S1编译，无参'
 }
 
 get_sop_full_path(){
@@ -43,9 +44,13 @@ get_sop_full_path(){
 }
 
 exec_build(){
+    s1_arg=''
+    if [ "$1" == "y" ];then
+        s1_arg='--args DEFINES+=S1'
+    fi
     pro_path=${pro_path//'[[project]]'/$project_name}
     build_path=${build_path//'[[project]]'/$project_name}
-    python3 ./syberh-build.py build -b $build_path -p $pro_path -d $pdk_path -t $TARGET_NAME -n $cpu_num --args SYBERH_APP=$SYBERH_APP --args SOPID=$SOPID
+    python3 ./syberh-build.py build -b $build_path -p $pro_path -d $pdk_path -t $TARGET_NAME -n $cpu_num --args SYBERH_APP=$SYBERH_APP --args SOPID=$SOPID $s1_arg
 }
 
 exec_clear(){
@@ -72,7 +77,8 @@ exec_rename(){
 }
 
 ACTION=''
-while getopts 'b:c:i:n:' arg; 
+use_s1=''
+while getopts 'b:c:i:n:s' arg; 
 do
     case $arg in
         b)
@@ -91,6 +97,9 @@ do
 	        ACTION='rename'
             project_name="$OPTARG"
             ;;
+        s)
+            use_s1='y'
+            ;;
         ?)
             usage
             exit 0
@@ -106,7 +115,7 @@ fi
 
 case $ACTION in
     build)
-        exec_build
+        exec_build $use_s1
     ;;
     clear)
         exec_clear $project_name

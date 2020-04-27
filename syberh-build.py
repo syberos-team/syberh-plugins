@@ -10,7 +10,7 @@ BIN_PATH = os.path.realpath(__file__)
 
 
 def commands():
-    parser = argparse.ArgumentParser(allow_abbrev=False, description='编译syberh项目')
+    parser = argparse.ArgumentParser(description='编译syberh项目')
 
     subparsers_cmd = parser.add_subparsers(dest='cmd', help='commands')
 
