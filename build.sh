@@ -14,7 +14,7 @@ pdk_path=''
 
 if [ -d "$HOME/SyberOS-Pdk" ];then
     pdk_path=$HOME/SyberOS-Pdk
-elif [ ! -d "$HOME/Syberos-Pdk" ];then
+elif [ -d "$HOME/Syberos-Pdk" ];then
     pdk_path=$HOME/Syberos-Pdk
 else
     echo '未安装pdk'
@@ -29,8 +29,6 @@ usage(){
     echo ''
     echo '  -b    执行编译，参数为插件项目名'
     echo '  -c    执行清理，参数为插件项目名'
-    echo '  -i    安装sop包，在编译输出目录中查找sop包，参数为插件项目名'
-    echo '  -n    将sop更改后缀名，参数为插件项目名'
     echo '  -s    使用S1编译，无参'
 }
 
@@ -57,28 +55,10 @@ exec_clear(){
     python3 ./syberh-build.py clear -b ${build_path//'[[project]]'/$project_name}
 }
 
-exec_install_sop(){
-    sop_path=$(get_sop_full_path)
-    if [ ! -f "$sop_path" ];then
-        echo '未找到sop包'
-        exit 1
-    fi
-
-    python3 ./syberh-build.py install -s $sop_path
-}
-
-exec_rename(){
-    sop_path=$(get_sop_full_path)
-    if [ ! -f "$sop_path" ];then
-        echo '未找到sop包'
-        exit 1
-    fi
-    python3 ./syberh-build.py rename -s $sop_path
-}
 
 ACTION=''
 use_s1=''
-while getopts 'b:c:i:n:s' arg; 
+while getopts 'b:c:s' arg; 
 do
     case $arg in
         b)
@@ -87,14 +67,6 @@ do
             ;;
         c)
             ACTION='clear'
-            project_name="$OPTARG"
-            ;;
-        i)
-            ACTION='install'
-            project_name="$OPTARG"
-            ;;
-	    n)
-	        ACTION='rename'
             project_name="$OPTARG"
             ;;
         s)
@@ -119,11 +91,5 @@ case $ACTION in
     ;;
     clear)
         exec_clear $project_name
-    ;;
-    install)
-        exec_install_sop
-    ;;
-    rename)
-	    exec_rename
     ;;
 esac

@@ -35,16 +35,6 @@ def commands():
     parser_build.add_argument('--args', action='append', required=False,
                         dest='args', help='qmake额外参数') 
                                    
-    # install
-    parser_install = subparsers_cmd.add_parser('install')
-    parser_install.add_argument('-s', '--sop', action='store', required=True,
-                        dest='sop_path', help='sop包路径')
-                        
-    # rename
-    parser_rename = subparsers_cmd.add_parser('rename')
-    parser_rename.add_argument('-s', '--sop', action='store', required=True,
-                        dest='sop_path', help='改名的sop包路径')
-                        
     return parser
 
 
@@ -61,18 +51,11 @@ def run_commands(cmds = {}):
             cmd_func(args)
 
 
-def search_sop(dir_path):
-    if not os.path.exists(dir_path):
-        return None
-    for f in os.listdir(dir_path):
-        print(f)
-
-
 def need_package_sop(pro_path):
     pro_dir = os.path.dirname(pro_path)
     xml_path = os.path.join(pro_dir, 'sopconfig.xml')
     return os.path.exists(xml_path) and os.path.isfile(xml_path)
-    
+
 
 def build(args):
     if not os.path.exists(args.build_path):
@@ -107,8 +90,6 @@ def build(args):
     cmd_setup3 = Template("${kchroot_path} 'sb2 -t ${target_full_name} -R' 'buildpkg ${pro_path}'") \
                 .substitute(kchroot_path=kchroot_path, target_full_name=target_full_name, pro_path=args.pro_path)
 
-    print(cmd_setup1)
-
     os.system(cmd_setup1)
     os.system(cmd_setup2)
     if need_package_sop(args.pro_path):
@@ -124,31 +105,8 @@ def clear(args):
         print('清理的目录不存在：' + args.build_path)
 
 
-def install(args):
-    if not os.path.exists(args.sop_path) or not os.path.isfile(args.sop_path):
-        print('sop不存在：', args.sop_path)
-        raise SystemExit(1)
-    if not args.sop_path.endswith('.sop'):
-        print('不是sop包：', args.sop_path)
-        raise SystemExit(1)
-    os.system('expect ' + os.path.join(BIN_PATH, 'syberh-scp.sh') + ' ' + args.sop_path)
-
-
-def rename(args):
-    if not os.path.exists(args.sop_path) or not os.path.isfile(args.sop_path):
-        print('sop不存在：', args.sop_path)
-        raise SystemExit(1)
-
-    sop_dir = os.path.dirname(args.sop_path)
-    sop_filename = os.path.basename(args.sop_path)
-    new_sop_filename = sop_filename.rstrip('.sop') + '.tar.gz'
-    os.rename(args.sop_path, os.path.join(sop_dir, new_sop_filename))
-
-
 if __name__ == '__main__':
     run_commands({
         'build': build,
-        'clear': clear,
-        'install': install,
-        'rename': rename
+        'clear': clear
     })
