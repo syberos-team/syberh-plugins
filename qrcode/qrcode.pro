@@ -18,12 +18,14 @@ CONFIG += link_pkgconfig
 contains(DEFINES, S1) {
     message('>> build with S1')
     PKGCONFIG += gstreamer-egl-0.10 android-headers
+    HEADERS += $$PWD/src/qrcode/gralloc_priv.h
 }else{
     message('>> build without S1')
 }
 
 RESOURCES += \
     $$PWD/qrcode.qrc
+
 
 HEADERS += \
     $$PWD/src/qrcode/cqrcoder.h \
