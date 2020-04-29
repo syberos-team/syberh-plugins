@@ -1,16 +1,15 @@
-#include "package.h"
+#include "packages.h"
 #include "cgui_application.h"
 #include <QDebug>
 #include "framework/common/errorinfo.h"
 
 using namespace NativeSdk;
 
-Package::Package()
+Packages::Packages()
 {
 }
 
-
-void Package::invoke(QString callbackID, QString actionName, QVariantMap params)
+void Packages::invoke(QString callbackID, QString actionName, QVariantMap params)
 {
     qDebug() << Q_FUNC_INFO << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
 
@@ -45,7 +44,7 @@ void Package::invoke(QString callbackID, QString actionName, QVariantMap params)
     }
 }
 
-void Package::openUrl(QString callbackID, QString scheme, QString path, QVariantMap params){
+void Packages::openUrl(QString callbackID, QString scheme, QString path, QVariantMap params){
     using namespace SYBEROS;
 
     if (scheme.isEmpty()) {
@@ -67,7 +66,7 @@ void Package::openUrl(QString callbackID, QString scheme, QString path, QVariant
     }
 }
 
-void Package::openPage(QString callbackID, QString scheme, QString path, QVariantMap params){
+void Packages::openPage(QString callbackID, QString scheme, QString path, QVariantMap params){
     using namespace SYBEROS;
 
     //遍历params拼接成key=value&key=value格式
@@ -103,7 +102,7 @@ void Package::openPage(QString callbackID, QString scheme, QString path, QVarian
     signalManager()->success(callbackID.toLong(), "success");
 }
 
-void Package::openByUrl(QString url){
+void Packages::openByUrl(QString url) {
 
     //url格式为: scheme://openPage/index.html?key=value&key=value
     QStringList list = url.split("://");
@@ -156,31 +155,31 @@ void Package::openByUrl(QString url){
     result.insert("path", path);
     result.insert("params", query);
 
-    signalManager()->subscribe("package", result);
+    signalManager()->subscribe("Packages", result);
 }
 
-void Package::openDocument(QString callbackID, QString sopId, QString uiappId,
+void Packages::openDocument(QString callbackID, QString sopId, QString uiappId,
                   QString action, QString path, QVariantMap params){
 
     using namespace SYBEROS;
 
-    if(sopId.isEmpty()){
+    if (sopId.isEmpty()) {
         signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "sopid is empty");
         return;
     }
 
-    if(uiappId.isEmpty()){
+    if (uiappId.isEmpty()) {
         signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "uiappid is empty");
         return;
     }
 
     QString mimeType = params.value("mimeType").toString();
-    if(mimeType.isEmpty()){
+    if (mimeType.isEmpty()) {
         mimeType = "*";
     }
     QString filePath = params.value("filePath").toString();
 
-    if(action != "openPage"){
+    if (action != "openPage") {
         qApp->runDocument(sopId, uiappId, action, mimeType, filePath);
         signalManager()->success(callbackID.toLong(), "success");
         return;
@@ -206,7 +205,7 @@ void Package::openDocument(QString callbackID, QString sopId, QString uiappId,
     signalManager()->success(callbackID.toLong(), "success");
 }
 
-void Package::openByDocument(QString action, QString mimetype, QString filePath){
+void Packages::openByDocument(QString action, QString mimetype, QString filePath){
 
     QString path = action;
     if(path.isEmpty()){
@@ -233,10 +232,10 @@ void Package::openByDocument(QString action, QString mimetype, QString filePath)
 
     qDebug() << "final subscribe result: " << result << endl;
 
-    signalManager()->subscribe("package", result);
+    signalManager()->subscribe("Packages", result);
 }
 
-QString Package::convertParamToUrl(QString url, QVariantMap paramMap){
+QString Packages::convertParamToUrl(QString url, QVariantMap paramMap){
 
     QMap<QString, QVariant>::Iterator it = paramMap.begin();
 
@@ -261,7 +260,7 @@ QString Package::convertParamToUrl(QString url, QVariantMap paramMap){
     return url;
 }
 
-QVariantMap Package::parseUrlToParam(QString url, QVariantMap paramMap){
+QVariantMap Packages::parseUrlToParam(QString url, QVariantMap paramMap){
     if (url.isEmpty()) {
         return paramMap;
     }
@@ -282,5 +281,4 @@ QVariantMap Package::parseUrlToParam(QString url, QVariantMap paramMap){
         paramMap.insert(itemList.value(0), itemList.value(1));
     }
     return paramMap;
-
 }

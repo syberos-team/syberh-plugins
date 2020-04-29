@@ -15,13 +15,9 @@ class APPSHARED_EXPORT App: public ExtensionSystem::IPlugin
 public:
     Q_INVOKABLE App();
 
-    void invoke(QString callbackID, QString action, QVariantMap params);
+    void invoke(QString callbackID, QString actionName, QVariantMap params);
 
     void setAppOrientation(QString callbackID, QVariantMap params);
-
-private:
-    // signal manager
-    ExtensionSystem::SignalManager *s;
 
 };
 

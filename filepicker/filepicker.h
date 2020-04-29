@@ -23,8 +23,6 @@ public:
     void open(QString callbackID, QVariantMap params);
 
 private:
-    // signal manager
-    ExtensionSystem::SignalManager *s;
     long globalCallbackID;
     QmlManager qmlManager;
     QmlObject *filepickerQml;

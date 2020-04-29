@@ -10,7 +10,6 @@
 
 Image::Image()
 {
-    s = signalManager();
 }
 
 void Image::invoke(QString callbackID, QString actionName, QVariantMap params)
@@ -54,7 +53,7 @@ void Image::chooseImage(QString callbackID, QVariantMap params)
 void Image::chooseCancel()
 {
     qDebug() << Q_FUNC_INFO << "chooseCancel***************";
-    s->success(globalCallbackID, "");
+    signalManager()->success(globalCallbackID, "");
     globalCallbackID = 0;
 }
 
@@ -71,7 +70,7 @@ void Image::receiveUrls(QString filesPath)
 
     qDebug() << Q_FUNC_INFO << "result***************" << result;
 
-    s->success(globalCallbackID, QVariant(result));
+    signalManager()->success(globalCallbackID, QVariant(result));
     qmlManager.destroy(chooseImageQml);
     globalCallbackID = 0;
 }
@@ -87,21 +86,21 @@ void Image::cameraSuccess(QString filePath)
     QJsonObject result = jsonDocument.object();
     qDebug() << Q_FUNC_INFO << "result***************" << result;
 
-    s->success(globalCallbackID, result);
+    signalManager()->success(globalCallbackID, result);
     globalCallbackID = 0;
 }
 
 void Image::cameraCancel()
 {
     qDebug() << Q_FUNC_INFO << "chooseCancel***************";
-    s->success(globalCallbackID, "");
+    signalManager()->success(globalCallbackID, "");
     globalCallbackID = 0;
 }
 
 void Image::albumCancel()
 {
     qDebug() << Q_FUNC_INFO << "chooseCancel***************";
-    s->success(globalCallbackID, "");
+    signalManager()->success(globalCallbackID, "");
     globalCallbackID = 0;
 }
 
@@ -123,7 +122,7 @@ void Image::previewImage(QString callbackID, QVariantMap params)
 void Image::previewImageSuccess()
 {
     qDebug() << Q_FUNC_INFO;
-    s->success(globalCallbackID, "");
+    signalManager()->success(globalCallbackID, "");
     globalCallbackID = 0;
 }
 
@@ -136,21 +135,21 @@ void Image::saveImageToPhotosAlbum(QString callbackID, QVariantMap params)
 
     if (filePath.isEmpty()) {
         qDebug() << Q_FUNC_INFO << "文件路径不能为空" << endl;
-        s->failed(globalCallbackID, ErrorInfo::InvalidParameter, "不合法的参数:filePath不能为空");
+        signalManager()->failed(globalCallbackID, ErrorInfo::InvalidParameter, "不合法的参数:filePath不能为空");
         return;
     }
 
     bool ret = Helper::instance()->isPicture(filePath);
     if (!ret) {
         qDebug() << Q_FUNC_INFO << "不是图片文件" << endl;
-        s->failed(globalCallbackID, ErrorInfo::IllegalMediaTypeError, "不合法的媒体文件类型:不是图片文件");
+        signalManager()->failed(globalCallbackID, ErrorInfo::IllegalMediaTypeError, "不合法的媒体文件类型:不是图片文件");
         return;
     }
 
     QFile file(filePath);
     if (!file.exists()) {
         qDebug() << Q_FUNC_INFO << "文件不存在：" << filePath << endl;
-        s->failed(globalCallbackID, ErrorInfo::InvalidURLError, "无效的url:图片不存在");
+        signalManager()->failed(globalCallbackID, ErrorInfo::InvalidURLError, "无效的url:图片不存在");
         return;
     }
 
@@ -174,11 +173,11 @@ void Image::saveImageToPhotosAlbum(QString callbackID, QVariantMap params)
         QFile::copy(filePath, newFile);
     } catch (QException e) {
         qDebug() << Q_FUNC_INFO << "保存图片到系统相册失败" << endl;
-        s->failed(globalCallbackID, ErrorInfo::SystemError, "系统错误:保存图片到系统相册失败");
+        signalManager()->failed(globalCallbackID, ErrorInfo::SystemError, "系统错误:保存图片到系统相册失败");
         return;
     }
 
-    s->success(globalCallbackID, newFile);
+    signalManager()->success(globalCallbackID, newFile);
     globalCallbackID = 0;
 }
 
@@ -192,21 +191,21 @@ void Image::getImageInfo(QString callbackID, QVariantMap params)
 
     if (filePath.isEmpty()) {
         qDebug() << Q_FUNC_INFO << "文件路径不能为空" << endl;
-        s->failed(globalCallbackID, ErrorInfo::InvalidParameter, "不合法的参数:path不能为空");
+        signalManager()->failed(globalCallbackID, ErrorInfo::InvalidParameter, "不合法的参数:path不能为空");
         return;
     }
 
     QFile file(filePath);
     if (!file.exists()) {
         qDebug() << Q_FUNC_INFO << "图片不存在：" << filePath << endl;
-        s->failed(globalCallbackID, ErrorInfo::InvalidURLError, "无效的url:图片不存在");
+        signalManager()->failed(globalCallbackID, ErrorInfo::InvalidURLError, "无效的url:图片不存在");
         return;
     }
 
     bool ret = Helper::instance()->isPicture(filePath);
     if (!ret) {
         qDebug() << Q_FUNC_INFO << "不是图片文件" << endl;
-        s->failed(globalCallbackID, ErrorInfo::IllegalMediaTypeError, "不合法的媒体文件类型:不是图片文件");
+        signalManager()->failed(globalCallbackID, ErrorInfo::IllegalMediaTypeError, "不合法的媒体文件类型:不是图片文件");
         return;
     }
 
@@ -224,7 +223,7 @@ void Image::getImageInfo(QString callbackID, QVariantMap params)
     QStringList filenameArr = fileInfo.fileName().split(".");
     jsonObject.insert("type", filenameArr[filenameArr.length()-1]);
 
-    s->success(globalCallbackID, QVariant(jsonObject));
+    signalManager()->success(globalCallbackID, QVariant(jsonObject));
     globalCallbackID = 0;
 }
 

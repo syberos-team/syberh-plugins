@@ -7,7 +7,6 @@ using namespace NativeSdk;
 
 App::App()
 {
-    s = signalManager();
 }
 
 void App::invoke(QString callbackID, QString actionName, QVariantMap params)
@@ -35,5 +34,5 @@ void App::setAppOrientation(QString callbackID, QVariantMap params)
         qDebug() << Q_FUNC_INFO << "webview index****" << i;
         qmlManager.call(webviews.at(i), "setPageOrientation(" + curOrientation + ")");
     }
-    s->success(callbackID.toLong(), true);
+    signalManager()->success(callbackID.toLong(), true);
 }

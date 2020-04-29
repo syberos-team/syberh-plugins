@@ -35,8 +35,6 @@ public:
     };
 
 private:
-    // signal manager
-    ExtensionSystem::SignalManager *s;
     long globalCallbackID;
     // 上传
     void start(QString callbackID, QVariantMap params);

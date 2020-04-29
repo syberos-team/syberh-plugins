@@ -1,27 +1,30 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2020-04-15T03:22:17
+# Project created by QtCreator 2020-04-28T10:08:46
 #
 #-------------------------------------------------
 
-QT       -= gui
+QT       += widgets
 
-TARGET = notification
+TARGET = packages
 TEMPLATE = lib
 
-DEFINES += NOTIFICATION_LIBRARY
+DEFINES += PACKAGES_LIBRARY
 
-SOURCES += notification.cpp 
+SOURCES += packages.cpp
 
-HEADERS += notification.h\
-        notification_global.h 
-
+HEADERS += packages.h\
+        packages_global.h
 
 CONFIG += link_pkgconfig
 CONFIG += C++11
 CONFIG += plugin
 
 PKGCONFIG += syberos-qt
+
+INCLUDEPATH += /usr/include/syberos_application
+
+LIBS += -L/usr/lib -lsyberos-application
 
 
 INCLUDEPATH += $$absolute_path("nativesdk/src", $$SYBERH_APP)
@@ -31,6 +34,3 @@ LIB_OUT_DIR = $$absolute_path("lib", $$SYBERH_APP)
 LIBS += -L$$LIB_OUT_DIR -lnativesdk -lpluginmanager
 
 DESTDIR = $$absolute_path("plugins", $$SYBERH_APP)
-
-INCLUDEPATH += /home/xuejun/syberh-v2.0/syberh/packages/syberos/nativesdk/src
-INCLUDEPATH += /home/xuejun/syberh-v2.0/syberh/packages/syberos/pluginmanager/src

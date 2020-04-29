@@ -1,20 +1,20 @@
-#ifndef PACKAGE_H
-#define PACKAGE_H
+#ifndef PACKAGES_H
+#define PACKAGES_H
 
 #include <QObject>
 #include <QtPlugin>
 
 #include "iplugin/iplugin.h"
-#include "package_global.h"
+#include "packages_global.h"
 
-class PACKAGESHARED_EXPORT Package: public ExtensionSystem::IPlugin
+class PACKAGESSHARED_EXPORT Packages: public ExtensionSystem::IPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "com.syberos.syberh.SyberhPlugin" FILE "plugin.json")
 
 public:
-    Package();
-    
+    Packages();
+
     void invoke(QString callbackID, QString actionName, QVariantMap params);
 
     /**
@@ -87,4 +87,4 @@ private :
 
 };
 
-#endif // PACKAGE_H
+#endif // PACKAGES_H

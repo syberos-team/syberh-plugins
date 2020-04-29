@@ -1,20 +1,20 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2020-04-15T03:41:28
+# Project created by QtCreator 2020-04-27T19:28:38
 #
 #-------------------------------------------------
 
-QT       += widgets
+QT       += network
 
-TARGET = package
+TARGET = networkInfo
 TEMPLATE = lib
 
-DEFINES += PACKAGE_LIBRARY
+DEFINES += NETWORKINFO_LIBRARY
 
-SOURCES += package.cpp
+SOURCES += networkinfo.cpp
 
-HEADERS += package.h\
-        package_global.h
+HEADERS += networkinfo.h\
+        networkinfo_global.h
 
 CONFIG += link_pkgconfig
 CONFIG += C++11
@@ -22,15 +22,11 @@ CONFIG += plugin
 
 PKGCONFIG += syberos-qt
 
-INCLUDEPATH += /usr/include/syberos_application
-
-LIBS += -L/usr/lib -lsyberos-application
-
-
 INCLUDEPATH += $$absolute_path("nativesdk/src", $$SYBERH_APP)
 INCLUDEPATH += $$absolute_path("pluginmanager/src", $$SYBERH_APP)
 
 LIB_OUT_DIR = $$absolute_path("lib", $$SYBERH_APP)
 LIBS += -L$$LIB_OUT_DIR -lnativesdk -lpluginmanager
+
 
 DESTDIR = $$absolute_path("plugins", $$SYBERH_APP)

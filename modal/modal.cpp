@@ -5,7 +5,6 @@ using namespace NativeSdk;
 
 Modal::Modal()
 {
-    s = signalManager();
 }
 
 bool Modal::initialize(const QStringList &arguments, QString *errorString)
@@ -55,17 +54,17 @@ void Modal::alert(QString callbackID, QVariantMap params)
     QString confirmColor = params.value("confirmColor", "#007aff").toString();
 
     if (content.isEmpty()) {
-        s->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "content不能为空");
+        signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "content不能为空");
         return;
     }
 
     if (!title.isEmpty() && title.size() > 7) {
-        s->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "标题最多7个汉字");
+        signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "标题最多7个汉字");
         return;
     }
 
     if (!confirmText.isEmpty() && confirmText.size() > 4) {
-        s->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "按钮最多4个汉字");
+        signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "按钮最多4个汉字");
         return;
     }
 
@@ -86,7 +85,7 @@ void Modal::alert(QString callbackID, QVariantMap params)
 
 void Modal::alertSuccess()
 {
-    s->success(globalCallbackID, "");
+    signalManager()->success(globalCallbackID, "");
     qmlManager.destroy(alertQml);
     globalCallbackID = 0;
 }
@@ -105,17 +104,17 @@ void Modal::confirm(QString callbackID, QVariantMap params)
     QString cancelColor = params.value("cancelColor", "#333333").toString();
 
     if (content.isEmpty()) {
-        s->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "content不能为空");
+        signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "content不能为空");
         return;
     }
 
     if (!title.isEmpty() && title.size() > 7) {
-        s->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "标题最多7个汉字");
+        signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "标题最多7个汉字");
         return;
     }
 
     if ((!confirmText.isEmpty() && confirmText.size() > 4) || (!cancelText.isEmpty() && cancelText.size() > 4)) {
-        s->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "按钮最多4个汉字");
+        signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "按钮最多4个汉字");
         return;
     }
 
@@ -137,14 +136,14 @@ void Modal::confirm(QString callbackID, QVariantMap params)
 
 void Modal::confirmSuccess()
 {
-    s->success(globalCallbackID, true);
+    signalManager()->success(globalCallbackID, true);
     qmlManager.destroy(confirmQml);
     globalCallbackID = 0;
 }
 
 void Modal::confirmReject()
 {
-    s->success(globalCallbackID, false);
+    signalManager()->success(globalCallbackID, false);
     qmlManager.destroy(confirmQml);
     globalCallbackID = 0;
 }
@@ -160,12 +159,12 @@ void Modal::prompt(QString callbackID, QVariantMap params)
     QString cancelText = params.value("cancelText", "取消").toString();
 
     if (!title.isEmpty() && title.size() > 7) {
-        s->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "标题最多7个汉字");
+        signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "标题最多7个汉字");
         return;
     }
 
     if ((!confirmText.isEmpty() && confirmText.size() > 4) || (!cancelText.isEmpty() && cancelText.size() > 4)) {
-        s->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "按钮最多4个汉字");
+        signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "按钮最多4个汉字");
         return;
     }
 
@@ -183,14 +182,14 @@ void Modal::prompt(QString callbackID, QVariantMap params)
 
 void Modal::promptAccepted(QVariant value)
 {
-    s->success(globalCallbackID, value);
+    signalManager()->success(globalCallbackID, value);
     qmlManager.destroy(promptQml);
     globalCallbackID = 0;
 }
 
 void Modal::promptCancel()
 {
-    s->success(globalCallbackID, "");
+    signalManager()->success(globalCallbackID, "");
     qmlManager.destroy(promptQml);
     globalCallbackID = 0;
 }
@@ -205,7 +204,7 @@ void Modal::toast(QString callbackID, QVariantMap params)
     QString duration = params.value("duration").toString();
 
     if (title.isEmpty()) {
-        s->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "提示的内容不能为空");
+        signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "提示的内容不能为空");
         return;
     }
 
@@ -218,9 +217,9 @@ void Modal::toast(QString callbackID, QVariantMap params)
     QString errorMsg = result.toString();
 
     if (errorMsg.isEmpty()) {
-        s->success(callbackID.toLong(), "");
+        signalManager()->success(callbackID.toLong(), "");
     } else {
-        s->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, errorMsg);
+        signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, errorMsg);
     }
 }
 
@@ -232,11 +231,11 @@ void Modal::gtoast(QString callbackID, QVariantMap params)
     QString title = params.value("title").toString();
 
     if (title.isEmpty()) {
-        s->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "提示的内容不能为空");
+        signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "提示的内容不能为空");
         return;
     }
 
     qmlManager.call(qmlManager.rootItem(), "gToast.requestToast('" + title + "')");
 
-    s->success(callbackID.toLong(), "");
+    signalManager()->success(callbackID.toLong(), "");
 }

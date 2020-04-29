@@ -40,8 +40,6 @@ public:
     void invoke(QString callbackID, QString action, QVariantMap params);
 
 private:
-    // signal manager
-    ExtensionSystem::SignalManager *s;
     long globalCallbackID;
     
     void start(QString callbackId, QString url, QString name, QString storage);

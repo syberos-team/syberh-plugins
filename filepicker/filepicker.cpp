@@ -7,7 +7,6 @@
 
 Filepicker::Filepicker()
 {
-    s = signalManager();
 }
 
 void Filepicker::invoke(QString callbackID, QString actionName, QVariantMap params)
@@ -48,7 +47,7 @@ void Filepicker::chooseOk(QString filesPath)
     QJsonDocument jsonDocument = QJsonDocument::fromJson(filesPath.toUtf8());
     if (jsonDocument.isNull()) {
         qDebug()<< "===> please check the string "<< filesPath.toLocal8Bit().data();
-        s->failed(globalCallbackID, ErrorInfo::PluginError, "返回数据格式错误");
+        signalManager()->failed(globalCallbackID, ErrorInfo::PluginError, "返回数据格式错误");
     }
 
     // json字符串转换为QJsonArray
@@ -56,7 +55,7 @@ void Filepicker::chooseOk(QString filesPath)
 
     qDebug() << Q_FUNC_INFO << "result***************" << result;
 
-    s->success(globalCallbackID, QVariant(result));
+    signalManager()->success(globalCallbackID, QVariant(result));
     globalCallbackID = 0;
 
     qmlManager.close(filepickerQml);
@@ -65,7 +64,7 @@ void Filepicker::chooseOk(QString filesPath)
 void Filepicker::chooseCancel()
 {
     qDebug() << Q_FUNC_INFO;
-    s->success(globalCallbackID, "");
+    signalManager()->success(globalCallbackID, "");
     globalCallbackID = 0;
     qmlManager.close(filepickerQml);
 }

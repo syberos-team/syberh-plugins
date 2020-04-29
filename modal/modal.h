@@ -31,8 +31,6 @@ public:
 
 
 private:
-    // signal manager
-    ExtensionSystem::SignalManager *s;
     long globalCallbackID;
     QmlManager qmlManager;
     QmlObject *alertQml;

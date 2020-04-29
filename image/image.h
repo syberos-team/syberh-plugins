@@ -24,8 +24,6 @@ public:
     void previewImage(QString callbackID, QVariantMap params);
 
 private:
-    // signal manager
-    ExtensionSystem::SignalManager *s;
     QmlManager qmlManager;
     QmlObject *chooseImageQml;
     QmlObject *previewQml;
