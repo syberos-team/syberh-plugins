@@ -219,7 +219,6 @@ void Modal::toast(QString callbackID, QVariantMap params)
     } else {
         signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, errorMsg);
     }
-    qmlManager.destroy(toastQml);
 }
 
 
