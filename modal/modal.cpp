@@ -210,8 +210,6 @@ void Modal::toast(QString callbackID, QVariantMap params)
 
     toastQml = qmlManager.create("qrc:/qml/SToast.qml", qmlManager.currentItem());
 
-    //QQmlExpression exp(m_view->rootContext(), childItem, "show('"+ title + "','" + icon + "'," + duration +")");
-
     QVariant result = qmlManager.call(toastQml, "show('"+ title + "','" + icon + "','" + duration +"')");
 
     QString errorMsg = result.toString();
@@ -221,6 +219,7 @@ void Modal::toast(QString callbackID, QVariantMap params)
     } else {
         signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, errorMsg);
     }
+    qmlManager.destroy(toastQml);
 }
 
 
