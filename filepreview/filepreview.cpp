@@ -43,7 +43,17 @@ void FilePreviewPrivate::previewTxt(QString &callbackID, QVariantMap &params)
     m_callbackID = callbackID;
     m_params = params;
 
-    QString filePath = params.value("path").toString();
+    QVariant pathVar = params.value("path");
+    if(pathVar.isNull() || !pathVar.isValid()) {
+        setError(ErrorInfo::InvalidParameter, "无效的文件路径");
+        return;
+    }
+
+    QString filePath = pathVar.toString();
+    if(filePath.isEmpty()) {
+        setError(ErrorInfo::InvalidParameter, "文件路径为空");
+        return;
+    }
     if(filePath.startsWith("file://")) {
         filePath = filePath.mid(7);
     }
