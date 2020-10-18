@@ -5,12 +5,12 @@
 #include <QtPlugin>
 #include <QtMultimedia>
 #include <QMediaPlayer>
-#include <QAudioRecorder>
 #include <QMediaContent>
 
 #include "iplugin/iplugin.h"
 #include "record_global.h"
 #include "historydata.h"
+#include "audioinput.h"
 
 class RECORDSHARED_EXPORT Record: public ExtensionSystem::IPlugin
 {
@@ -72,8 +72,8 @@ public:
     void stop(QString callbackID,QVariantMap params);
 
 private :
-    QAudioRecorder *recoder;
     HistoryData *historydata;
+    AudioInput *audioInput = nullptr;
 
     QString currPath;
 };

@@ -139,7 +139,7 @@ void HistoryData::updateMetadata(QString path,int size,int duration){
 
     QSqlQuery query(myConnection);
     query.prepare("update files set duration = ?,size = ? where path = ?");
-    query.addBindValue(ceil(duration/1000));
+    query.addBindValue(duration);
     query.addBindValue(size);
     query.addBindValue(path);
 
@@ -182,7 +182,7 @@ QJsonArray HistoryData::selectMetadata() {
             jsonObj.insert("fileName", fileName);
             jsonObj.insert("path", query.value("path").toString());
             jsonObj.insert("size", query.value("size").toInt());
-            jsonObj.insert("duration", formatTime(1000*query.value("duration").toInt()));
+            jsonObj.insert("duration", query.value("duration").toInt());
             jsonObj.insert("created", query.value("created").toString());
             jsonArr.append(jsonObj);
         }

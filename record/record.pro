@@ -18,11 +18,13 @@ CONFIG += plugin
 PKGCONFIG += syberos-qt
 
 SOURCES += record.cpp \
-           historydata.cpp
+           historydata.cpp \
+           audioinput.cpp
 
 HEADERS += record.h\
         record_global.h \
-        historydata.h
+        historydata.h \
+        audioinput.h
 
 
 INCLUDEPATH += $$absolute_path("nativesdk/src", $$SYBERH_APP)
