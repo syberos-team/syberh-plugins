@@ -30,6 +30,24 @@ private :
      */
     void  aboutPhone(QString callbackID,QVariantMap params);
 
+     /**
+     * @brief setDate 设置系统时间
+     * @param callBackID 任务Id
+     * @param params 参数
+     * @return 成功则无返回。
+     *      失败则返回错误码。
+     */
+    void  setDate(QString callbackID,QVariantMap params);
+
+     /**
+     * @brief setVirtualPanel 设置虚拟按键显示隐藏
+     * @param callBackID 任务Id
+     * @param params 参数
+     * @return 成功则无返回。
+     *      失败则返回错误码。
+     */
+    void  setVirtualPanel(QString callbackID,QVariantMap params);
+
     /**
      * @brief getResolution 获取手机分辨率
      * @param callBackID 获取手机分辨率的任务Id

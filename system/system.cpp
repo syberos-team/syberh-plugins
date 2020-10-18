@@ -10,7 +10,16 @@
 #include <QSize>
 #include <QTimeZone>
 #include <QLocale>
+#include <QDateTime>
+#include <ctime.h>
+#include <QDBusConnection>
+#include <QDBusMessage>
 
+
+
+static const QString COMPOSITOR_SERVICE_NAME = "com.syberos.compositor";
+static const QString COMPOSITOR_OBJECT_PATH = "/com/syberos/compositor";
+static const QString COMPOSITOR_INTERFACE_NAME = "com.syberos.compositor.CompositorInterface";
 
 System::System()
 {
@@ -22,8 +31,14 @@ void System::invoke(QString callbackID, QString actionName, QVariantMap params)
     qDebug() << Q_FUNC_INFO << "## invoke hello plugin(4)!!!" << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
 
     Q_UNUSED(actionName);
-    
-    aboutPhone(callbackID, params);
+
+    if (actionName == "aboutPhone") {
+        aboutPhone(callbackID, params);
+    }
+
+     if (actionName == "setDate") {
+        setDate(callbackID, params);
+    }
 }
 
 
@@ -79,6 +94,62 @@ void System::aboutPhone(QString callbackID,QVariantMap params){
     jsonObject.insert("language", language);//系统语言
     jsonObject.insert("region", region);//系统地区
 
+    QJsonValue jsonObjectValue = QJsonValue::fromVariant(jsonObject);
+
+    qDebug() << Q_FUNC_INFO << "jsonObject:" << jsonObject << ", jsonObjectValue: " << jsonObjectValue << endl;
+
+    signalManager()->success(callbackID.toLong(), QVariant(jsonObject));
+}
+
+
+void System::setVirtualPanel(QString callbackID,QVariantMap params){
+    Q_UNUSED(callbackID);
+    Q_UNUSED(params);
+
+    qDebug() << Q_FUNC_INFO << "callbackID:" << callbackID << ", params: " << params << endl;
+    
+    bool visible= params.value("visible").toBool();
+    QDBusMessage dbusMessage = QDBusMessage::createMethodCall(COMPOSITOR_SERVICE_NAME,
+                                                              COMPOSITOR_OBJECT_PATH,
+                                                              COMPOSITOR_INTERFACE_NAME,
+                                                              "setVirtualPanelVisible");
+    dbusMessage << visible;
+    qDebug() << QDBusConnection::systemBus().send(dbusMessage);
+
+
+
+    QJsonObject jsonObject;
+    jsonObject.insert("visible", visible);
+   
+    
+    QJsonValue jsonObjectValue = QJsonValue::fromVariant(jsonObject);
+
+    qDebug() << Q_FUNC_INFO << "jsonObject:" << jsonObject << ", jsonObjectValue: " << jsonObjectValue << endl;
+
+    signalManager()->success(callbackID.toLong(), QVariant(jsonObject));
+}
+
+
+void System::setDate(QString callbackID,QVariantMap params){
+    Q_UNUSED(callbackID);
+    Q_UNUSED(params);
+    int modem = 0;
+
+    qDebug() << Q_FUNC_INFO << "callbackID:" << callbackID << ", params: " << params << endl;
+     QString date = params.value("date").toString();
+   
+    QDBusMessage dbusMessage = QDBusMessage::createMethodCall(COMPOSITOR_SERVICE_NAME,
+                                                              COMPOSITOR_OBJECT_PATH,
+                                                              COMPOSITOR_INTERFACE_NAME,
+                                                              "setTime");
+    QDateTime dt = QDateTime::fromString(date, "yyyy-MM-dd hh:mm:ss");
+    qDebug() << "time " << dt.toString();
+    dbusMessage << dt.toString();
+    qDebug() << QDBusConnection::systemBus().send(dbusMessage);
+
+    QJsonObject jsonObject;
+    jsonObject.insert("date", date);
+    
     QJsonValue jsonObjectValue = QJsonValue::fromVariant(jsonObject);
 
     qDebug() << Q_FUNC_INFO << "jsonObject:" << jsonObject << ", jsonObjectValue: " << jsonObjectValue << endl;
