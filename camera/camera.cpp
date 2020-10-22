@@ -13,14 +13,14 @@ Camera::Camera()
 
 void Camera::extensionsInitialized()
 {
+    qDebug() << Q_FUNC_INFO;
     // error signal
     connect(&qmlManager, SIGNAL(error(QString)), this, SLOT(error(QString)));
-    qDebug() << Q_FUNC_INFO << "## hello plugin(2)!!!";
 }
 
 void Camera::invoke(QString callbackID, QString actionName, QVariantMap params)
 {
-    qDebug() << Q_FUNC_INFO << "## invoke hello plugin(4)!!!" << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
+    qDebug() << Q_FUNC_INFO << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
 
     if (actionName == "takePhoto") {
         takePhoto(callbackID, params);

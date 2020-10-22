@@ -150,7 +150,7 @@ CPage {
 
     CTitleBar{
         id:titleBar
-        anchors.top: parent.top
+        anchors.top: barCodeScanPage.top
         anchors.topMargin: env.dp(48)
         leftItemIcon:"qrc:/res/iconBack.png"
         leftItemBackgroundEnabled: false
@@ -173,8 +173,8 @@ CPage {
     VideoOutput {
         id:videopt
         anchors.top: titleBar.bottom
-        width: parent.width
-        anchors.bottom: parent.bottom
+        width: barCodeScanPage.width
+        anchors.bottom: barCodeScanPage.bottom
         orientation:-90
         source: QtCamera
         fillMode:VideoOutput.Stretch
@@ -182,8 +182,8 @@ CPage {
 
         Rectangle{
             id:outareaTop
-            anchors.top: parent.top
-            width:parent.width
+            anchors.top: videopt.top
+            width:videopt.width
             anchors.bottom: scanAreaOut.top
             color:"#3b4050"
             opacity: 0.5
@@ -191,7 +191,7 @@ CPage {
         Rectangle{
             id:outareaRight
             anchors.top: outareaTop.bottom
-            anchors.right: parent.right
+            anchors.right: videopt.right
             anchors.left: scanAreaOut.right
             anchors.bottom: outareaBottom.top
             color:"#3b4050"
@@ -200,8 +200,8 @@ CPage {
         Rectangle{
             id:outareaBottom
             anchors.top: scanAreaOut.bottom
-            width:parent.width
-            anchors.bottom: parent.bottom
+            width:videopt.width
+            anchors.bottom: videopt.bottom
             color:"#3b4050"
             opacity: 0.5
         }
@@ -209,7 +209,7 @@ CPage {
             id:outareaLeft
             anchors.top: outareaTop.bottom
             anchors.right: scanAreaOut.left
-            anchors.left: parent.left
+            anchors.left: videopt.left
             anchors.bottom: outareaBottom.top
             color:"#3b4050"
             opacity: 0.5
@@ -220,18 +220,18 @@ CPage {
             source: "qrc:/res/scanAreaOut.png"
             width: env.dp(320)
             height: env.dp(320)
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: videopt.horizontalCenter
+            anchors.verticalCenter: videopt.verticalCenter
             fillMode: Image.PreserveAspectFit
             Image {
                 id: scanAreaCorner
                 source: "qrc:/res/scanAreaCorner.png"
-                anchors.fill: parent
+                anchors.fill: scanAreaOut
                 fillMode: Image.PreserveAspectFit
             }
             Image {
                 id: scanLine
-                width:parent.width-2
+                width:scanAreaOut.width-2
                 height: env.dp(9)
                 source: "qrc:/res/scanLine.png"
                 fillMode: Image.PreserveAspectFit
@@ -298,9 +298,9 @@ CPage {
             radius: env.dp(50)
             color:"#2d56d2"
         }
-        anchors.bottom: parent.bottom
+        anchors.bottom: barCodeScanPage.bottom
         anchors.bottomMargin: env.dp(58)
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenter: barCodeScanPage.horizontalCenter
         onClicked: {
             popAndClearStatus()
             barCodeScanPage.cancel()

@@ -16,7 +16,7 @@ Battery::Battery()
 
 void Battery::invoke(QString callbackID, QString actionName, QVariantMap params)
 {
-    qDebug() << Q_FUNC_INFO << "## invoke hello plugin(4)!!!" << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
+    qDebug() << Q_FUNC_INFO << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
 
     //如果参数不使用此方法可以防止运行异常
     Q_UNUSED(actionName);

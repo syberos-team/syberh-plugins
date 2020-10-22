@@ -20,7 +20,7 @@ HEADERS += telephony.h\
         telephony_global.h
 
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]/../syberos_application
-LIBS += -L/usr/lib -lsyberos-application
+LIBS += -L$$[QT_INSTALL_LIBS] -lsyberos-application
 
 
 INCLUDEPATH += $$absolute_path("nativesdk/src", $$SYBERH_APP)

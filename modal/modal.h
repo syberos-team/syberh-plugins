@@ -18,9 +18,6 @@ class MODALSHARED_EXPORT Modal: public ExtensionSystem::IPlugin
 public:
     Q_INVOKABLE Modal();
 
-    bool initialize(const QStringList &arguments, QString *errorString);
-    void extensionsInitialized();
-    bool delayedInitialize();
     void invoke(QString callbackID, QString action, QVariantMap params);
 
     void alert(QString callbackID, QVariantMap params);

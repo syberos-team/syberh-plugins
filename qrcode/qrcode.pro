@@ -53,7 +53,7 @@ SOURCES += \
 
 
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]/../syberos_application
-LIBS += -L/usr/lib/ -lsyberos-application
+LIBS += -L$$[QT_INSTALL_LIBS] -lsyberos-application
 
 INCLUDEPATH += $$absolute_path("nativesdk/src", $$SYBERH_APP)
 INCLUDEPATH += $$absolute_path("pluginmanager/src", $$SYBERH_APP)
@@ -65,24 +65,21 @@ PLUGIN_OUT_DIR = $$absolute_path("plugins", $$SYBERH_APP)
 DESTDIR = $$PLUGIN_OUT_DIR
 
 
-QMAKE_LFLAGS += -Wl,-rpath=/data/apps/$$SOPID/lib
-
-
 SYBERH_QT_VERSION = $$[QT_VERSION]
 SYBERH_QT_VERSION = $$split(SYBERH_QT_VERSION, ".")
 QT_VER_MIN = $$member(SYBERH_QT_VERSION, 1)
 
-
 lessThan(QT_VER_MIN, 12) {
-    message(Qt版本小于5.12)
+    message("Qrcode Qt版本小于5.12")
     LIB_ZXING = $$PWD/lib/libzxing.so
-    DISTFILES += $$LIB_ZXING
-    QMAKE_PRE_LINK += $$system("cp $$LIB_ZXING $$LIB_OUT_DIR/libzxing.so")
-    LIBS += -L$$PWD/lib -lzxing
 } else {
-    message(Qt版本大于等于5.12)
+    message("Qrcode Qt版本大于等于5.12")
     LIB_ZXING = $$PWD/lib/libzxing_os5.so
-    DISTFILES += $$LIB_ZXING
-    QMAKE_PRE_LINK += $$system("cp $$LIB_ZXING $$LIB_OUT_DIR/libzxing_os5.so")
-    LIBS += -L$$PWD/lib -lzxing_os5
 }
+
+DISTFILES += $$LIB_ZXING
+QMAKE_PRE_LINK += $$system("cp $$LIB_ZXING $$LIB_OUT_DIR/libzxing.so")
+LIBS += -L$$PWD/lib -lzxing
+
+
+QMAKE_LFLAGS += -Wl,-rpath=/data/apps/$$SOPID/lib

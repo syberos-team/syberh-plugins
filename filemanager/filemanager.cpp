@@ -18,7 +18,7 @@ FileManager::FileManager()
 
 void FileManager::invoke(QString callbackID, QString actionName, QVariantMap params)
 {
-    qDebug() << Q_FUNC_INFO << "## invoke hello plugin(4)!!!" << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
+    qDebug() << Q_FUNC_INFO << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
     if (actionName == "move") {
         move(callbackID, params.value("srcPath").toString(), params.value("destPath").toString());
     } else if (actionName == "copy") {

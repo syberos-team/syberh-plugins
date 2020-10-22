@@ -23,7 +23,7 @@ CONFIG += plugin
 PKGCONFIG += syberos-qt
 
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]/../syberos_application
-LIBS += -L/usr/lib -lsyberos-application
+LIBS += -L$$[QT_INSTALL_LIBS] -lsyberos-application
 
 INCLUDEPATH += $$absolute_path("nativesdk/src", $$SYBERH_APP)
 INCLUDEPATH += $$absolute_path("pluginmanager/src", $$SYBERH_APP)

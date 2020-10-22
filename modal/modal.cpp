@@ -7,26 +7,10 @@ Modal::Modal()
 {
 }
 
-bool Modal::initialize(const QStringList &arguments, QString *errorString)
-{
-    qDebug() << Q_FUNC_INFO << "## hello plugin(1)!!!" << "arguments: " << arguments << "errorString" << errorString;
-    return true;
-}
-
-void Modal::extensionsInitialized()
-{
-    qDebug() << Q_FUNC_INFO << "## hello plugin(2)!!!";
-}
-
-bool Modal::delayedInitialize()
-{
-    qDebug() << Q_FUNC_INFO << "## hello plugin(3)!!!";
-    return true;
-}
 
 void Modal::invoke(QString callbackID, QString actionName, QVariantMap params)
 {
-    qDebug() << Q_FUNC_INFO << "## invoke hello plugin(4)!!!" << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
+    qDebug() << Q_FUNC_INFO << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
 
     if (actionName == "alert") {
         alert(callbackID, params);

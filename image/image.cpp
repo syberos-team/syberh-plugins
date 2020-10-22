@@ -14,7 +14,7 @@ Image::Image()
 
 void Image::invoke(QString callbackID, QString actionName, QVariantMap params)
 {
-    qDebug() << Q_FUNC_INFO << "## invoke hello plugin(4)!!!" << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
+    qDebug() << Q_FUNC_INFO << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
 
     if (actionName == "chooseImage") {
         chooseImage(callbackID, params);

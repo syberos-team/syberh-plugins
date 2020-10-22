@@ -7,7 +7,7 @@
 #include <QJsonObject>
 #include <csystempackagemanager.h>
 #include "update.h"
-#include "framework/common/extendedconfig.h"
+#include "framework/common/projectconfig.h"
 #include "framework/common/errorinfo.h"
 
 // 必须用这个命令空间下的qApp才可以
@@ -41,10 +41,10 @@ Update::Update():d(new SyberH5HelpperPrivate())
     connect(d->networkAccessManager,SIGNAL(finished(QNetworkReply *)),this,SLOT(handleNetworkAccessReply(QNetworkReply*)));
     d->m_pSystemPackageManager = new CSystemPackageManager(this);
 
-    NEW_VERSION_HEAD = ExtendedConfig::instance()->get("storeBaseUrl").toString();
+    NEW_VERSION_HEAD = ProjectConfig::instance()->getStoreBaseUrl();
     // 获取sop包的详细信息接口（每个客户的域名不一样，api是一样的）
     CHECK_NEWVERSION = "/api/v1/app";
-    MY_APP_ID = ExtendedConfig::instance()->get("sopid").toString();
+    MY_APP_ID = ProjectConfig::instance()->getSopid();
     qDebug() << Q_FUNC_INFO  << "check" << NEW_VERSION_HEAD << CHECK_NEWVERSION << MY_APP_ID << endl;
 }
 
