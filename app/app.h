@@ -19,6 +19,7 @@ public:
 
     void setAppOrientation(QString callbackID, QVariantMap params);
 
+    void  quit();
 };
 
 #endif // APP_H
