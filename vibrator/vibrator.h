@@ -19,6 +19,7 @@ public:
     Vibrator();
     ~Vibrator();
 
+    void invokeInitialize();
     void invoke(QString callbackID, QString action, QVariantMap params);
 
 private :

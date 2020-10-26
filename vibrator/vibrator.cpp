@@ -10,15 +10,6 @@ using namespace NativeSdk;
 
 Vibrator::Vibrator()
 {
-    // 创建CNGFManager的对象
-    client = new CNgfManager(this);
-
-    // 注册状态改变信号
-    QObject::connect(client, SIGNAL(eventCompleted(quint32)), this, SLOT(eventCompleted(quint32)));
-    QObject::connect(client, SIGNAL(eventFailed(quint32)), this, SLOT(eventFailed(quint32)));
-    QObject::connect(client, SIGNAL(eventPlaying(quint32)), this, SLOT(eventPlaying(quint32)));
-
-    profile = new CSystemProfileManager();
 }
 Vibrator::~Vibrator()
 {
@@ -32,6 +23,20 @@ Vibrator::~Vibrator()
 
     delete profile;
     profile = NULL;
+}
+
+void Vibrator::invokeInitialize()
+{
+    qDebug() << Q_FUNC_INFO;
+    // 创建CNGFManager的对象
+    client = new CNgfManager(this);
+
+    // 注册状态改变信号
+    QObject::connect(client, SIGNAL(eventCompleted(quint32)), this, SLOT(eventCompleted(quint32)));
+    QObject::connect(client, SIGNAL(eventFailed(quint32)), this, SLOT(eventFailed(quint32)));
+    QObject::connect(client, SIGNAL(eventPlaying(quint32)), this, SLOT(eventPlaying(quint32)));
+
+    profile = new CSystemProfileManager();
 }
 
 void Vibrator::invoke(QString callbackID, QString actionName, QVariantMap params)

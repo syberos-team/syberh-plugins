@@ -8,11 +8,15 @@ using namespace NativeSdk;
 
 
 Audio::Audio(){
-    player = new QMediaPlayer();
 }
 
 Audio::~Audio(){
     delete player;
+}
+
+void Audio::invokeInitialize()
+{
+    player = new QMediaPlayer();
 }
 
 void Audio::invoke(QString callbackID, QString actionName, QVariantMap params)

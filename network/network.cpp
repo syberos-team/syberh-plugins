@@ -11,8 +11,6 @@ using namespace NativeSdk;
 
 Network::Network()
 {
-    manager = new QNetworkAccessManager(this);
-    connect(manager, SIGNAL(finished(QNetworkReply *)), this, SLOT(finished(QNetworkReply *)));
 }
 
 Network::~Network()
@@ -20,6 +18,11 @@ Network::~Network()
   delete manager;
 }
 
+void Network::invokeInitialize()
+{
+    manager = new QNetworkAccessManager(this);
+    connect(manager, SIGNAL(finished(QNetworkReply *)), this, SLOT(finished(QNetworkReply *)));
+}
 
 void Network::invoke(QString callbackID, QString actionName, QVariantMap params)
 {

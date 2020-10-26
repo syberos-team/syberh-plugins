@@ -21,6 +21,7 @@ public:
     Record();
     ~Record();
 
+    void invokeInitialize();
     void invoke(QString callbackID, QString actionName, QVariantMap params);
 
     /**

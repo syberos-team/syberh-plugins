@@ -12,6 +12,10 @@ using namespace NativeSdk;
 
 Database::Database()
 {
+}
+
+void Database::invokeInitialize()
+{
     dataDir = Helper::instance()->getDataRootPath();
     myConnection = QSqlDatabase::addDatabase("QSQLITE");
 }

@@ -19,6 +19,7 @@ public:
     Audio();
     ~Audio();
 
+    void invokeInitialize();
     void invoke(QString callbackID, QString actionName, QVariantMap params);
 
     /**

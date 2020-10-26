@@ -19,6 +19,7 @@ public:
     Update();
     ~Update();
 
+    void invokeInitialize();
     void invoke(QString callbackID, QString actionName, QVariantMap params);
 
 private :

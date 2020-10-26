@@ -16,6 +16,7 @@ class DATABASESHARED_EXPORT Database : public ExtensionSystem::IPlugin
 public:
     Database();
 
+    void invokeInitialize();
     void invoke(QString callbackID, QString actionName, QVariantMap params);
     
     /**

@@ -47,12 +47,10 @@ QJsonObject successJson(QString callbackId, QString path, int status, qint64 rec
 
 Download::Download()
 {
-    process = new QProcess();
     isnetWork = true;
 }
 
 Download::~Download() {
-    delete process;
     QMap<QString, TaskInfo*>::ConstIterator it = tasks.begin();
     for(; it!=tasks.end(); it++){
         removeTask(it.key());

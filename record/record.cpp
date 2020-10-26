@@ -12,11 +12,15 @@ using namespace NativeSdk;
 
 Record::Record()
 {
-    historydata = new HistoryData();
 }
 
 Record::~Record(){
     delete historydata;
+}
+
+void Record::invokeInitialize()
+{
+    historydata = new HistoryData();
 }
 
 void Record::invoke(QString callbackID, QString actionName, QVariantMap params)

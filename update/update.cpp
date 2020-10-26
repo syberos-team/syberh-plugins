@@ -36,6 +36,15 @@ public:
 
 Update::Update():d(new SyberH5HelpperPrivate())
 {
+}
+
+Update::~Update() {
+    delete d;
+}
+
+
+void Update::invokeInitialize()
+{
     d->env = new CEnvironment(this);
     d->networkAccessManager = new QNetworkAccessManager(this);
     connect(d->networkAccessManager,SIGNAL(finished(QNetworkReply *)),this,SLOT(handleNetworkAccessReply(QNetworkReply*)));
@@ -47,11 +56,6 @@ Update::Update():d(new SyberH5HelpperPrivate())
     MY_APP_ID = ProjectConfig::instance()->getSopid();
     qDebug() << Q_FUNC_INFO  << "check" << NEW_VERSION_HEAD << CHECK_NEWVERSION << MY_APP_ID << endl;
 }
-
-Update::~Update() {
-    delete d;
-}
-
 
 void Update::invoke(QString callbackID, QString actionName, QVariantMap params)
 {
