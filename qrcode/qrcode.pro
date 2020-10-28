@@ -83,3 +83,7 @@ LIBS += -L$$PWD/lib -lzxing
 
 
 QMAKE_LFLAGS += -Wl,-rpath=/data/apps/$$SOPID/lib
+
+CONFIG(release, debug|release){
+    QMAKE_POST_LINK=$(STRIP) $(DESTDIR)$(TARGET)
+}

@@ -16,6 +16,8 @@ SOURCES += camera.cpp
 HEADERS += camera.h\
         camera_global.h
 
+RESOURCES += \
+    camera.qrc
 
 CONFIG += link_pkgconfig
 CONFIG += C++11
@@ -33,8 +35,6 @@ LIBS += -L$$[QT_INSTALL_LIBS] -lsyberos-application
 
 DESTDIR = $$absolute_path("plugins", $$SYBERH_APP)
 
-RESOURCES += \
-    camera.qrc
-
-INCLUDEPATH += /home/xuejun/syberh-v2.0/syberh/packages/syberos/nativesdk/src
-INCLUDEPATH += /home/xuejun/syberh-v2.0/syberh/packages/syberos/pluginmanager/src
+CONFIG(release, debug|release){
+    QMAKE_POST_LINK=$(STRIP) $(DESTDIR)$(TARGET)
+}

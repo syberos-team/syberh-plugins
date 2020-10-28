@@ -16,6 +16,9 @@ SOURCES += image.cpp
 HEADERS += image.h\
         image_global.h
 
+RESOURCES += \
+    image.qrc
+
 CONFIG += link_pkgconfig
 CONFIG += C++11
 CONFIG += plugin
@@ -34,6 +37,6 @@ LIBS += -L$$LIB_OUT_DIR -lnativesdk -lpluginmanager
 
 DESTDIR = $$absolute_path("plugins", $$SYBERH_APP)
 
-
-RESOURCES += \
-    image.qrc
+CONFIG(release, debug|release){
+    QMAKE_POST_LINK=$(STRIP) $(DESTDIR)$(TARGET)
+}

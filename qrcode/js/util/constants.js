@@ -11,26 +11,26 @@
 * by Beijing Yuan Xin Technology Co.,Ltd. All rights are reserved.
 */
 
-var rate = 1.5;//applets.getSizeRatio();
-//rate = function(){
-//    var value;
-//    switch(gScreenInfo.density){
-//    case CScreenInfo.Small :
-//        value = 0.75;
-//        break;
-//    case CScreenInfo.Normal :
-//        value = 1;
-//        break;
-//    case CScreenInfo.Large:
-//        value = 1.5;
-//        break;
-//    case CScreenInfo.ExtraLarge:
-//        value = 2;
-//        break;
-//    }
-//    console.log("constantsjs  rate ", value);
-//    return value;
-//}
+var rate = (function(){
+    var value;
+    switch(gScreenInfo.density){
+    case CScreenInfo.Low :
+        value = 0.75;
+        break;
+    case CScreenInfo.Medium :
+        value = 1;
+        break;
+    case CScreenInfo.High:
+        value = 1.5;
+        break;
+    case CScreenInfo.ExtraHigh:
+        value = 2;
+        break;
+    default:
+        value = 1.5;
+   }
+   return value;
+})();
 
 var DEFAULT_FONT_FAMILY = "方正兰亭准黑_GBK"//"方正兰亭准黑_GBK"; //"Liberation Sans" // "Droid Sans"
 

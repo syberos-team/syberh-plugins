@@ -16,6 +16,8 @@ SOURCES += modal.cpp
 HEADERS += modal.h\
         modal_global.h
 
+RESOURCES += \
+    modal.qrc
 
 CONFIG += link_pkgconfig
 CONFIG += C++11
@@ -35,5 +37,6 @@ LIBS += -L$$LIB_OUT_DIR -lnativesdk -lpluginmanager
 
 DESTDIR = $$absolute_path("plugins", $$SYBERH_APP)
 
-RESOURCES += \
-    modal.qrc
+CONFIG(release, debug|release){
+    QMAKE_POST_LINK=$(STRIP) $(DESTDIR)$(TARGET)
+}

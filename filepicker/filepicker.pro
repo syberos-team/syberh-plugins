@@ -16,6 +16,9 @@ SOURCES += filepicker.cpp
 HEADERS += filepicker.h\
         filepicker_global.h
 
+RESOURCES += \
+    filepicker.qrc
+
 CONFIG += link_pkgconfig
 CONFIG += C++11
 CONFIG += plugin
@@ -34,5 +37,6 @@ LIBS += -L$$LIB_OUT_DIR -lnativesdk -lpluginmanager
 
 DESTDIR = $$absolute_path("plugins", $$SYBERH_APP)
 
-RESOURCES += \
-    filepicker.qrc
+CONFIG(release, debug|release){
+    QMAKE_POST_LINK=$(STRIP) $(DESTDIR)$(TARGET)
+}

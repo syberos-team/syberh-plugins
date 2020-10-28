@@ -19,6 +19,9 @@ HEADERS += filepreview_global.h \
         filepreview.h \
         texteditor.h
 
+RESOURCES += \
+    filepreview.qrc
+
 CONFIG += link_pkgconfig
 CONFIG += C++11
 CONFIG += plugin
@@ -37,5 +40,6 @@ LIBS += -L$$LIB_OUT_DIR -lnativesdk -lpluginmanager
 
 DESTDIR = $$absolute_path("plugins", $$SYBERH_APP)
 
-RESOURCES += \
-    filepreview.qrc
+CONFIG(release, debug|release){
+    QMAKE_POST_LINK=$(STRIP) $(DESTDIR)$(TARGET)
+}

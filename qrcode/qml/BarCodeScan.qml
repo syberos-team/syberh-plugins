@@ -218,8 +218,8 @@ CPage {
         Image {
             id: scanAreaOut
             source: "qrc:/res/scanAreaOut.png"
-            width: env.dp(320)
-            height: env.dp(320)
+            width: env.dp(450)
+            height: env.dp(450)
             anchors.horizontalCenter: videopt.horizontalCenter
             anchors.verticalCenter: videopt.verticalCenter
             fillMode: Image.PreserveAspectFit
@@ -292,7 +292,7 @@ CPage {
         text: "取消"
         textColor: "#ffffff"
         width: env.dp(580)
-        height: env.dp(80)
+        height: env.dp(100)
         pixelSize: env.dp(36)
         backgroundComponent: Rectangle{
             radius: env.dp(50)

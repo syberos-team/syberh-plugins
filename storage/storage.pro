@@ -43,3 +43,7 @@ DESTDIR = $$absolute_path("plugins", $$SYBERH_APP)
 
 LIB_OUT_DIR = $$absolute_path("lib", $$SYBERH_APP)
 LIBS += -L$$LIB_OUT_DIR -lnativesdk
+
+CONFIG(release, debug|release){
+    QMAKE_POST_LINK=$(STRIP) $(DESTDIR)$(TARGET)
+}
