@@ -28,7 +28,7 @@ CAbstractPopLayer{
    canceledOnBackKeyReleased: false
 
    /*! 模态框和页面的缩放比例 */
-   property real scaleFactor: Screen.width / 1080
+   property real scaleFactor: env.dp(1)
 
    /*! 模态框背景的宽度 */
    property real contentBgWidth: 840 * scaleFactor

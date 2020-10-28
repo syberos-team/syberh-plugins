@@ -25,7 +25,7 @@ Rectangle {
     z: 1000
 
     /*! 模态框和页面的缩放比例 */
-    property real scaleFactor: Screen.width / 1080
+    property real scaleFactor: env.dp(1)
 
     /*! 提示的内容 */
     //property string title: ""
