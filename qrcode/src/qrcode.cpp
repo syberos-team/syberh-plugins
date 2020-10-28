@@ -19,7 +19,7 @@ Qrcode::~Qrcode()
     delete d;
 }
 
-void Qrcode::extensionsInitialized()
+void Qrcode::invokeInitialize()
 {
     QQuickView *m_view = SYBEROS::SyberosGuiCache::qQuickView();
     QrcodeRegister qrcode;

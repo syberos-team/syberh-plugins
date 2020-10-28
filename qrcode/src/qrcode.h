@@ -17,8 +17,7 @@ public:
     explicit Qrcode();
     ~Qrcode();
 
-    void extensionsInitialized();
-
+    void invokeInitialize();
     void invoke(QString callbackID, QString action, QVariantMap params);
 
 public slots:
