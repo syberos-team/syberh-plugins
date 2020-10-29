@@ -12,7 +12,6 @@
 
 import QtQuick 2.0
 import com.syberos.basewidgets 2.0
-import org.nemomobile.thumbnailer 1.0
 import "../js/util/tool.js" as Tool
 
 CEditListViewDelegate {
@@ -32,7 +31,7 @@ CEditListViewDelegate {
             anchors.left: parent.left
             anchors.leftMargin: Tool.UI.DEFAULT_MARGIN_LEFT
             anchors.verticalCenter: parent.verticalCenter
-            visible: !icon_vi.visible
+            visible: !icon_vi.item.visible
             height: Tool.UI.FILE_ICON_HEIGHT
             width: Tool.UI.FILE_ICON_WIDTH
             source: fileUtils.getIcon(filePath, mimeType) //iconSrc
@@ -41,25 +40,20 @@ CEditListViewDelegate {
             clip: true
         }
 
-        Thumbnail {
+        Loader {
             id: icon_vi
-            width: Tool.UI.FILE_ICON_WIDTH
-            height: Tool.UI.FILE_ICON_HEIGHT
             anchors.left: parent.left
-            anchors.leftMargin: Tool.UI.DEFAULT_MARGIN_LEFT
+            anchors.leftMargin: 40
             anchors.verticalCenter: parent.verticalCenter
-            visible: (fileUtils.getFileType(filePath) === "image" || fileUtils.getFileType(filePath) === "video") ? true : false
-            clip: true
-
-            sourceSize.width: Tool.UI.FILE_ICON_WIDTH
-            sourceSize.height: Tool.UI.FILE_ICON_HEIGHT
-            source: "file://" + encodeURIComponent(filePath)
-            mimeType : fileUtils.getFileType(filePath)
+            source: helper.getQtVersion() >= 0x050c00 ? 'qrc:/qml/SThumbnailOS5.qml': 'qrc:/qml/SThumbnail.qml'
+            onLoaded: {
+                icon_vi.item.filePath = filePath
+            }
         }
 
         Column {
             anchors.verticalCenter: parent.verticalCenter
-            anchors.left: icon.visible ? icon.right : icon_vi.right
+            anchors.left: icon.visible ? icon.right : icon_vi.item.right
             anchors.leftMargin: Tool.UI.FILE_LIST_ROW_SPACING
             anchors.right: parent.right
             spacing: Tool.UI.FILE_LIST_COLUMN_SPACING

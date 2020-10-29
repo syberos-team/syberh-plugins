@@ -18,8 +18,11 @@ class FILEPICKERSHARED_EXPORT Filepicker: public ExtensionSystem::IPlugin
 
 public:
     Filepicker();
+    ~Filepicker();
 
+    void invokeInitialize();
     void invoke(QString callbackID, QString actionName, QVariantMap params);
+
     void open(QString callbackID, QVariantMap params);
 
 private:

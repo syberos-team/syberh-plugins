@@ -3,6 +3,8 @@
         <file>qml/SDelegateComponent.qml</file>
         <file>qml/SFilesPicker.qml</file>
         <file>qml/SFilesPickerView.qml</file>
+        <file>qml/SThumbnail.qml</file>
+        <file>qml/SThumbnailOS5.qml</file>
         <file>js/util/tool.js</file>
         <file>img/document.png</file>
         <file>img/line.png</file>

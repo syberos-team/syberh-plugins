@@ -4,8 +4,18 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 
-
 Filepicker::Filepicker()
+{
+}
+
+Filepicker::~Filepicker()
+{
+    if(filepickerQml != nullptr){
+        filepickerQml->deleteLater();
+    }
+}
+
+void Filepicker::invokeInitialize()
 {
 }
 
@@ -27,6 +37,7 @@ void Filepicker::open(QString callbackID, QVariantMap params)
     bool showBack = params.value("showBack", false).toBool();
     QString category = params.value("category", "all").toString();
     int count = params.value("count", 1).toInt();
+
 
     filepickerQml = qmlManager.open("qrc:/qml/SFilesPicker.qml");
 

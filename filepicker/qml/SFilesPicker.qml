@@ -12,7 +12,6 @@
 
 import QtQuick 2.0
 import com.syberos.basewidgets 2.0
-import org.nemomobile.thumbnailer 1.0
 import com.syberos.filemanager.filepicker 1.0
 
 CPage {
