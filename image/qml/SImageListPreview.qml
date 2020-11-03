@@ -9,7 +9,6 @@
  */
 import QtQuick 2.3
 import com.syberos.basewidgets 2.0
-import org.nemomobile.thumbnailer 1.0
 import com.syberos.photos.extension 1.0
 
 
