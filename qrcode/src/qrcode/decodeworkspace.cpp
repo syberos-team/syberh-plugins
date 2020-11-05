@@ -7,7 +7,7 @@
 #include <errno.h>
 DecodeWorkSpace::DecodeWorkSpace(QObject *parent):QObject(parent)
 {
-    m_pDThread = new DecodeThread();
+    m_pDThread = new DecodeThread(parent);
     connect(m_pDThread, SIGNAL(decodeFinished(QString,QString,bool)), this, SLOT(finishedDecode(QString,QString,bool)));
     m_nImageProcessing = false;
     m_pCamera = QtCamera::getInstance();

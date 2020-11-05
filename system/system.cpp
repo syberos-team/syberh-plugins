@@ -133,7 +133,6 @@ void System::setVirtualPanel(QString callbackID,QVariantMap params){
 void System::setDate(QString callbackID,QVariantMap params){
     Q_UNUSED(callbackID);
     Q_UNUSED(params);
-    int modem = 0;
 
     qDebug() << Q_FUNC_INFO << "callbackID:" << callbackID << ", params: " << params << endl;
      QString date = params.value("date").toString();

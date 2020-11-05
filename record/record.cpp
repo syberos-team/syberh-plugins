@@ -92,7 +92,7 @@ void Record::start(QString callbackID,QVariantMap params){
         audioInput->deleteLater();
         audioInput = nullptr;
     }
-    audioInput = new AudioInput();
+    audioInput = new AudioInput(this);
     audioInput->setFilePath(newFile);
     audioInput->record();
 

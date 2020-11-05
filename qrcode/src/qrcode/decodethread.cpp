@@ -17,7 +17,7 @@
 #define  BARCODE_IMAGE_HEIGHT 450
 #define  DECODE_TMP_IMAGE_PATH "/tmp/syberosDecodeImage.jpg"
 
-DecodeThread::DecodeThread(QObject *parent):m_nDecode(true)
+DecodeThread::DecodeThread(QObject *parent): QObject(parent), m_nDecode(true)
 {
     this->moveToThread(&workThread);
     connect(this, SIGNAL(decodeBeginSignal(QVideoFrame)), this, SLOT(beginDecode(QVideoFrame)));

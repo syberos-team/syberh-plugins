@@ -5,7 +5,7 @@
 #define _SAMPLE_RATE 8000 
 #define _SAMPLE_BITS 16
 
-AudioInput::AudioInput(QObject *parent)
+AudioInput::AudioInput(QObject *parent): QObject(parent)
 {
     // Set up the desired format, for example:
 
