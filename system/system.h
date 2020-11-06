@@ -74,7 +74,15 @@ private :
     *      失败则返回错误码。
     */
    void  getSysVersionID(QString callbackID,QVariantMap params);
-
+  
+  /**
+     * @brief 截屏
+     * @param callBackID 任务Id
+     * @param params 参数
+     * @return 成功则无返回。
+     *      失败则返回错误码。
+     */
+    void  captureScreen(QString callbackID,QVariantMap params);
 };
 
 #endif // SYSTEM_H
