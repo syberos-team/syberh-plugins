@@ -156,6 +156,26 @@ void System::setDate(QString callbackID,QVariantMap params){
     signalManager()->success(callbackID.toLong(), QVariant(jsonObject));
 }
 
+void System::captureScreen(QString callbackID,QVariantMap params){
+    Q_UNUSED(callbackID);
+    Q_UNUSED(params);
+    int modem = 0;
+
+    qDebug() << Q_FUNC_INFO << "callbackID:" << callbackID << ", params: " << params << endl;
+
+    QDBusMessage dbusMessage = QDBusMessage::createMethodCall(COMPOSITOR_SERVICE_NAME,
+                                                              COMPOSITOR_OBJECT_PATH,
+                                                              COMPOSITOR_INTERFACE_NAME,
+                                                              "captureScreen");
+    qDebug() << QDBusConnection::systemBus().send(dbusMessage);
+
+    QJsonObject jsonObject;
+    jsonObject.insert("success", true);
+    QJsonValue jsonObjectValue = QJsonValue::fromVariant(jsonObject);
+
+    signalManager()->success(callbackID.toLong(), QVariant(jsonObject));
+}
+
 
 void System::getResolution(QString callbackID,QVariantMap params){
 
