@@ -159,7 +159,6 @@ void System::setDate(QString callbackID,QVariantMap params){
 void System::captureScreen(QString callbackID,QVariantMap params){
     Q_UNUSED(callbackID);
     Q_UNUSED(params);
-    int modem = 0;
 
     qDebug() << Q_FUNC_INFO << "callbackID:" << callbackID << ", params: " << params << endl;
 
