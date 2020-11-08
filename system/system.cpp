@@ -39,6 +39,10 @@ void System::invoke(QString callbackID, QString actionName, QVariantMap params)
      if (actionName == "setDate") {
         setDate(callbackID, params);
     }
+    
+     if (actionName == "captureScreen") {
+        captureScreen(callbackID, params);
+    }
 }
 
 
