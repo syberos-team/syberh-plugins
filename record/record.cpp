@@ -70,7 +70,19 @@ void Record::start(QString callbackID,QVariantMap params){
     int timeT = time.toTime_t();                     //将当前时间转为时间戳
     QString timeStr = time.toString("yyyyMMdd");
 
-    QString newFile = path + "/" +  timeStr + "_" + QString::number(timeT) + ".wav"; 
+    QString format = params.value("format").toString();
+
+    if (format == "aac") {
+        format = "aac";
+    } else if (format == "mp3") {
+        format = "mp3";
+    } else {
+        format = "wav";
+    }
+
+    qDebug() << Q_FUNC_INFO << format << "####format####";
+
+    QString newFile = path + "/" +  timeStr + "_" + QString::number(timeT) + "." + format;
     currPath = newFile;
     QFile file(newFile);
 
@@ -92,7 +104,7 @@ void Record::start(QString callbackID,QVariantMap params){
         audioInput->deleteLater();
         audioInput = nullptr;
     }
-    audioInput = new AudioInput(this);
+    audioInput = new AudioInput(params, this);
     audioInput->setFilePath(newFile);
     audioInput->record();
 
