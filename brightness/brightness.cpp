@@ -13,7 +13,7 @@ Brightness::Brightness()
 }
 
 
-void Brightness::invoke(QString callbackID, QString actionName, QVariantMap params)
+void Brightness::invoke(const QString &callbackID, const QString &actionName, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
 
@@ -33,7 +33,7 @@ void Brightness::invoke(QString callbackID, QString actionName, QVariantMap para
 }
 
 
-void Brightness::brightnessInfo(QString callbackID,QVariantMap params){
+void Brightness::brightnessInfo(const QString &callbackID, const QVariantMap &params){
     qDebug() << Q_FUNC_INFO << "callbackID" << callbackID << ", params" << params << endl;
     CSystemDisplaySettings display;
 
@@ -58,7 +58,7 @@ void Brightness::brightnessInfo(QString callbackID,QVariantMap params){
     signalManager()->success(callbackID.toLong(), json);
 }
 
-void Brightness::setAdaptiveDimmingEnabled(QString callbackID,QVariantMap params){
+void Brightness::setAdaptiveDimmingEnabled(const QString &callbackID, const QVariantMap &params){
     qDebug() << Q_FUNC_INFO << "callbackID" << callbackID << ", params" << params << endl;
 
     QString state = params.value("state").toString();
@@ -80,7 +80,7 @@ void Brightness::setAdaptiveDimmingEnabled(QString callbackID,QVariantMap params
     signalManager()->success(callbackID.toLong(), json);
 }
 
-void Brightness::setAmbientLightSensorEnabled(QString callbackID,QVariantMap params){
+void Brightness::setAmbientLightSensorEnabled(const QString &callbackID, const QVariantMap &params){
     qDebug() << Q_FUNC_INFO << "callbackID" << callbackID << ", params" << params << endl;
 
     QString state = params.value("state").toString();
@@ -102,7 +102,7 @@ void Brightness::setAmbientLightSensorEnabled(QString callbackID,QVariantMap par
     signalManager()->success(callbackID.toLong(), json);
 }
 
-void Brightness::setBlankTimeout(QString callbackID,QVariantMap params){
+void Brightness::setBlankTimeout(const QString &callbackID, const QVariantMap &params){
     qDebug() << Q_FUNC_INFO << "callbackID" << callbackID << ", params" << params << endl;
 
     int timeout = params.value("timeout").toInt();
@@ -118,7 +118,7 @@ void Brightness::setBlankTimeout(QString callbackID,QVariantMap params){
     signalManager()->success(callbackID.toLong(), json);
 }
 
-void Brightness::setBrightness(QString callbackID,QVariantMap params){
+void Brightness::setBrightness(const QString &callbackID, const QVariantMap &params){
     qDebug() << Q_FUNC_INFO << "callbackID" << callbackID << ", params" << params << endl;
     bool ok;
     int brightness = params.value("brightness").toString().toInt(&ok, 10);
@@ -134,7 +134,7 @@ void Brightness::setBrightness(QString callbackID,QVariantMap params){
     signalManager()->success(callbackID.toLong(), json);
 }
 
-void Brightness::setDimTimeout(QString callbackID,QVariantMap params){
+void Brightness::setDimTimeout(const QString &callbackID, const QVariantMap &params){
     qDebug() << Q_FUNC_INFO << "callbackID" << callbackID << ", params" << params << endl;
 
     int timeout = params.value("timeout").toInt();

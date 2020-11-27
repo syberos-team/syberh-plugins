@@ -15,7 +15,7 @@ class BRIGHTNESSSHARED_EXPORT Brightness : public ExtensionSystem::IPlugin
 public:
     Brightness();
 
-    void invoke(QString callbackID, QString actionName, QVariantMap params);
+    void invoke(const QString &callbackID, const QString &actionName, const QVariantMap &params);
 
 private :
 
@@ -26,7 +26,7 @@ private :
      * @return 成功则返回系统屏幕亮度信息。
      *      失败则返回错误码。
      */
-    void brightnessInfo(QString callbackID,QVariantMap params);
+    void brightnessInfo(const QString &callbackID, const QVariantMap &params);
 
     /**
      * @brief setAdaptiveDimmingEnabled 设置自适应调光开关。
@@ -35,7 +35,7 @@ private :
      * @return 成功则无返回。
      *      失败则返回错误码。
      */
-    void setAdaptiveDimmingEnabled(QString callbackID,QVariantMap params);
+    void setAdaptiveDimmingEnabled(const QString &callbackID, const QVariantMap &params);
 
     /**
      * @brief setAmbientLightSensorEnabled 开关环境光感器。
@@ -44,7 +44,7 @@ private :
      * @return 成功则无返回。
      *      失败则返回错误码。
      */
-    void setAmbientLightSensorEnabled(QString callbackID,QVariantMap params);
+    void setAmbientLightSensorEnabled(const QString &callbackID, const QVariantMap &params);
 
     /**
      * @brief setBlankTimeout 设置息屏时长。
@@ -53,7 +53,7 @@ private :
      * @return 成功则无返回。
      *      失败则返回错误码。
      */
-    void setBlankTimeout(QString callbackID,QVariantMap params);
+    void setBlankTimeout(const QString &callbackID, const QVariantMap &params);
 
     /**
      * @brief setBrightness 设置屏幕亮度。
@@ -62,7 +62,7 @@ private :
      * @return 成功则无返回。
      *      失败则返回错误码。
      */
-    void setBrightness(QString callbackID,QVariantMap params);
+    void setBrightness(const QString &callbackID, const QVariantMap &params);
 
     /**
      * @brief :setDimTimeout 设置无操作时屏幕进入暗屏状态的时长。
@@ -71,7 +71,7 @@ private :
      * @return 成功则无返回。
      *      失败则返回错误码。
      */
-    void setDimTimeout(QString callbackID,QVariantMap params);
+    void setDimTimeout(const QString &callbackID, const QVariantMap &params);
 };
 
 #endif // BRIGHTNESS_H

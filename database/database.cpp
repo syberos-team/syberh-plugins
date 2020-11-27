@@ -21,7 +21,7 @@ void Database::invokeInitialize()
 }
 
 
-void Database::invoke(QString callbackID, QString actionName, QVariantMap params)
+void Database::invoke(const QString &callbackID, const QString &actionName, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
     if (actionName == "createTable"){
@@ -37,7 +37,7 @@ void Database::invoke(QString callbackID, QString actionName, QVariantMap params
     }
 }
 
-void Database::createTable(QString callbackID, QVariantMap params){
+void Database::createTable(const QString &callbackID, const QVariantMap &params){
     qDebug() << Q_FUNC_INFO << "createTable" << params << endl;
     QString databaseName = params.value("databaseName").toString();//数据库名
     QString sql = params.value("sql").toString();//创建表sql
@@ -98,7 +98,7 @@ void Database::createTable(QString callbackID, QVariantMap params){
     signalManager()->success(callbackID.toLong(), true);
 }
 
-void Database::query(QString callbackID, QVariantMap params){
+void Database::query(const QString &callbackID, const QVariantMap &params){
     qDebug() << Q_FUNC_INFO << "selectOperate" << params << endl;
     QString databaseName = params.value("databaseName").toString();//数据库名
     QString sqlQuery = params.value("sql").toString();
@@ -152,7 +152,7 @@ void Database::query(QString callbackID, QVariantMap params){
     signalManager()->success(callbackID.toLong(), QVariant(jsonArr));
 }
 
-void Database::execute(QString callbackID, QVariantMap params){
+void Database::execute(const QString &callbackID, const QVariantMap &params){
     qDebug() << Q_FUNC_INFO << "selectOperate" << params << endl;
     QString databaseName = params.value("databaseName").toString();//数据库名
     QString sqlQuery = params.value("sql").toString();
@@ -196,7 +196,7 @@ void Database::execute(QString callbackID, QVariantMap params){
     signalManager()->success(callbackID.toLong(), true);
 }
 
-bool Database::isDatabaseExists(QString callbackID, QVariantMap params){
+bool Database::isDatabaseExists(const QString &callbackID, const QVariantMap &params){
     qDebug() << Q_FUNC_INFO << "isDataExists" << params << endl;
     QString databaseName = params.value("databaseName").toString();//数据库名
 
@@ -212,7 +212,7 @@ bool Database::isDatabaseExists(QString callbackID, QVariantMap params){
     return true;
 }
 
-bool Database::isTableExists(QString callbackID, QVariantMap params){
+bool Database::isTableExists(const QString &callbackID, const QVariantMap &params){
     qDebug() << Q_FUNC_INFO << "isTableExists" << params << endl;
     QString tableName = params.value("tableName").toString();
     QString databaseName = params.value("databaseName").toString();//数据库名
@@ -278,7 +278,7 @@ bool Database::isTableExists(QString callbackID, QVariantMap params){
     return true;
 }
 
-bool Database::checkOrCreateDir(QString path){
+bool Database::checkOrCreateDir(const QString &path){
     qDebug() << Q_FUNC_INFO << path << endl;
     QDir __dir;
     if (!__dir.exists(path)) {
@@ -304,7 +304,7 @@ bool Database::checkOrCreateDir(QString path){
     return true;
 }
 
-bool Database::checkDatabaseExists(QString dbName) {
+bool Database::checkDatabaseExists(const QString &dbName) {
     qDebug() << Q_FUNC_INFO << dbName << endl;
 
     if(dbName.isEmpty()){

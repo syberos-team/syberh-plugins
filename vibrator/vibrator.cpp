@@ -39,7 +39,7 @@ void Vibrator::invokeInitialize()
     profile = new CSystemProfileManager();
 }
 
-void Vibrator::invoke(QString callbackID, QString actionName, QVariantMap params)
+void Vibrator::invoke(const QString &callbackID, const QString &actionName, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
 
@@ -55,7 +55,7 @@ void Vibrator::invoke(QString callbackID, QString actionName, QVariantMap params
 }
 
 
-void Vibrator::vibrate(QString callbackID, QVariantMap params){
+void Vibrator::vibrate(const QString &callbackID, const QVariantMap &params){
 
     qDebug() << Q_FUNC_INFO << "params: " << params << endl;
     globalCallbackID = callbackID.toLong();
@@ -120,7 +120,7 @@ void Vibrator::vibrate(QString callbackID, QVariantMap params){
 }
 
 
-void Vibrator::vibrateInfo(QString callbackID,QVariantMap params){
+void Vibrator::vibrateInfo(const QString &callbackID, const QVariantMap &params){
     qDebug() << Q_FUNC_INFO  << "callbackID is" << callbackID << "params is" << params << endl;
     globalCallbackID = callbackID.toLong();
 
@@ -138,7 +138,7 @@ void Vibrator::vibrateInfo(QString callbackID,QVariantMap params){
     globalCallbackID = 0;
 }
 
-void Vibrator::setTouchVibrationSoundEnabled(QString callbackID, QVariantMap params){
+void Vibrator::setTouchVibrationSoundEnabled(const QString &callbackID, const QVariantMap &params){
     qDebug() << Q_FUNC_INFO  << "callbackID is" << callbackID << "params is" << params << endl;
     globalCallbackID = callbackID.toLong();
 
@@ -163,7 +163,7 @@ void Vibrator::setTouchVibrationSoundEnabled(QString callbackID, QVariantMap par
 }
 
 
-void Vibrator::setVibratingEnabled(QString callbackID,QVariantMap params){
+void Vibrator::setVibratingEnabled(const QString &callbackID, const QVariantMap &params){
     qDebug() << "setVibratingEnabled callbackID is" << callbackID << "params is" << params << endl;
     globalCallbackID = callbackID.toLong();
 

@@ -26,7 +26,7 @@ System::System()
 }
 
 
-void System::invoke(QString callbackID, QString actionName, QVariantMap params)
+void System::invoke(const QString &callbackID, const QString &actionName, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
 
@@ -34,19 +34,15 @@ void System::invoke(QString callbackID, QString actionName, QVariantMap params)
 
     if (actionName == "aboutPhone") {
         aboutPhone(callbackID, params);
-    }
-
-     if (actionName == "setDate") {
+    }else if (actionName == "setDate") {
         setDate(callbackID, params);
-    }
-    
-     if (actionName == "captureScreen") {
+    }else if (actionName == "captureScreen") {
         captureScreen(callbackID, params);
     }
 }
 
 
-void System::aboutPhone(QString callbackID,QVariantMap params){
+void System::aboutPhone(const QString &callbackID, const QVariantMap &params){
     Q_UNUSED(callbackID);
     Q_UNUSED(params);
     int modem = 0;
@@ -106,7 +102,7 @@ void System::aboutPhone(QString callbackID,QVariantMap params){
 }
 
 
-void System::setVirtualPanel(QString callbackID,QVariantMap params){
+void System::setVirtualPanel(const QString &callbackID, const QVariantMap &params){
     Q_UNUSED(callbackID);
     Q_UNUSED(params);
 
@@ -134,7 +130,7 @@ void System::setVirtualPanel(QString callbackID,QVariantMap params){
 }
 
 
-void System::setDate(QString callbackID,QVariantMap params){
+void System::setDate(const QString &callbackID, const QVariantMap &params){
     Q_UNUSED(callbackID);
     Q_UNUSED(params);
 
@@ -160,7 +156,7 @@ void System::setDate(QString callbackID,QVariantMap params){
     signalManager()->success(callbackID.toLong(), QVariant(jsonObject));
 }
 
-void System::captureScreen(QString callbackID,QVariantMap params){
+void System::captureScreen(const QString &callbackID, const QVariantMap &params){
     Q_UNUSED(callbackID);
     Q_UNUSED(params);
 
@@ -180,7 +176,7 @@ void System::captureScreen(QString callbackID,QVariantMap params){
 }
 
 
-void System::getResolution(QString callbackID,QVariantMap params){
+void System::getResolution(const QString &callbackID, const QVariantMap &params){
 
     Q_UNUSED(params);
     QScreen *screen = QGuiApplication::primaryScreen();
@@ -196,7 +192,7 @@ void System::getResolution(QString callbackID,QVariantMap params){
     signalManager()->success(callbackID.toLong(), QVariant(screenObj));
 }
 
-void System::getCoreVersion(QString callbackID,QVariantMap params){
+void System::getCoreVersion(const QString &callbackID, const QVariantMap &params){
     Q_UNUSED(params);
     COsInfo info;
     QString version = info.kernelVersion();
@@ -204,7 +200,7 @@ void System::getCoreVersion(QString callbackID,QVariantMap params){
     signalManager()->success(callbackID.toLong(), QVariant(version));
 }
 
-void System::getSysVersionID(QString callbackID,QVariantMap params){
+void System::getSysVersionID(const QString &callbackID, const QVariantMap &params){
     Q_UNUSED(params);
     COsInfo info;
     QString version = info.osVersion();
