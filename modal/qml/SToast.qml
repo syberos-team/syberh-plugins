@@ -17,7 +17,7 @@ reserved.
 import QtQuick 2.3
 import QtQuick.Window 2.2
 import com.syberos.basewidgets 2.0
-import "../js/util/tool.js" as Tool
+import "../js/util/modalTool.js" as Tool
 
 
 Rectangle {
@@ -112,7 +112,7 @@ Rectangle {
             return "提示的内容不能为空";
         }
 
-        if(!icon || (icon !== "success" && icon !== "error")){
+        if(icon !== "success" && icon !== "error" && icon !== "none"){
             icon = "success";
         }
 
