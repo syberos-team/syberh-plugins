@@ -14,7 +14,7 @@ Upload::Upload()
     m_error = false;
 }
 
-QJsonObject successJson(QString callbackId, int status, qint64 received, qint64 total){
+QJsonObject successJson(const QString &callbackId, int status, qint64 received, qint64 total){
     QJsonObject json;
     json.insert("uploadID", callbackId);
     json.insert("status", status);
@@ -23,7 +23,7 @@ QJsonObject successJson(QString callbackId, int status, qint64 received, qint64 
     return json;
 }
 
-void Upload::invoke(QString callbackID, QString actionName, QVariantMap params)
+void Upload::invoke(const QString &callbackID, const QString &actionName, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
 
@@ -34,7 +34,7 @@ void Upload::invoke(QString callbackID, QString actionName, QVariantMap params)
     }
 }
 
-void Upload::start(QString callbackID, QVariantMap params)
+void Upload::start(const QString &callbackID, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "params" << params;
     globalCallbackID = callbackID.toLong();
@@ -91,7 +91,7 @@ void Upload::start(QString callbackID, QVariantMap params)
 }
 
 
-void Upload::cancel(QString callbackID, QVariantMap params)
+void Upload::cancel(const QString &callbackID, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "params" << params;
     globalCallbackID = callbackID.toLong();
@@ -110,7 +110,7 @@ void Upload::cancel(QString callbackID, QVariantMap params)
     }
 }
 
-void Upload::deleteTask(QString taskId)
+void Upload::deleteTask(const QString &taskId)
 {
     qDebug() << Q_FUNC_INFO << "taskId" << taskId;
     TaskInfo *taskInfo = tasks.value(taskId);
@@ -126,7 +126,7 @@ void Upload::deleteTask(QString taskId)
     }
 }
 
-void Upload::onUploadProgress(QString callbackID, qint64 bytesReceived, qint64 bytesTotal)
+void Upload::onUploadProgress(const QString &callbackID, qint64 bytesReceived, qint64 bytesTotal)
 {
     qDebug() << Q_FUNC_INFO << "！！！！！-----------上传文件，onUploadProgress." << endl;
 
@@ -148,7 +148,7 @@ void Upload::onUploadProgress(QString callbackID, qint64 bytesReceived, qint64 b
 
     signalManager()->success(globalCallbackID, json);
 }
-void Upload::onFinished(QString callbackID)
+void Upload::onFinished(const QString &callbackID)
 {
 
     qDebug() << Q_FUNC_INFO << "！！！！！-----------上传文件，onFinished." << endl;
@@ -166,7 +166,7 @@ void Upload::onFinished(QString callbackID)
     signalManager()->success(globalCallbackID, json);
 }
 
-void Upload::onError(QString callbackID, qint64 statusCode, QString error)
+void Upload::onError(const QString &callbackID, qint64 statusCode, const QString &error)
 {
     // 任务异常，删除任务
     deleteTask(callbackID);
@@ -174,7 +174,7 @@ void Upload::onError(QString callbackID, qint64 statusCode, QString error)
     signalManager()->failed(globalCallbackID, statusCode, error);
 }
 
-void Upload::onStarted(QString callbackID)
+void Upload::onStarted(const QString &callbackID)
 {
     QJsonObject json = successJson(callbackID, Started, 0, 0);
     signalManager()->success(globalCallbackID, json);

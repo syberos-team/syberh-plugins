@@ -15,10 +15,10 @@ public:
     ~UploadManager();
 
     //设置UploadId
-    void setUploadId(QString uploadId);
+    void setUploadId(const QString &uploadId);
 
     // 开始上传文件
-    void uploadFile(QVariantMap params);
+    void uploadFile(const QVariantMap &params);
 
     // 停止下载工作
     void stopWork();
@@ -39,14 +39,14 @@ private:
 
 signals:
 
-    void signalStarted(QString uploadId);
+    void signalStarted(const QString &uploadId);
 
-    void signalUploadProcess(QString uploadId, qint64 bytesReceived, qint64 bytesTotal);
+    void signalUploadProcess(const QString &uploadId, qint64 bytesReceived, qint64 bytesTotal);
 
     //
-    void signalReplyFinished(QString uploadId);
+    void signalReplyFinished(const QString &uploadId);
 
-    void signalError(QString uploadId, qint64 statusCode, QString error);
+    void signalError(const QString &uploadId, qint64 statusCode, const QString &error);
 
 public slots:
     // 上传进度信息

@@ -24,7 +24,7 @@ void Network::invokeInitialize()
     connect(manager, SIGNAL(finished(QNetworkReply *)), this, SLOT(finished(QNetworkReply *)));
 }
 
-void Network::invoke(QString callbackID, QString actionName, QVariantMap params)
+void Network::invoke(const QString &callbackID, const QString &actionName, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
 

@@ -18,10 +18,10 @@ class IMAGESHARED_EXPORT Image: public ExtensionSystem::IPlugin
 public:
     Q_INVOKABLE Image();
 
-    void invoke(QString callbackID, QString action, QVariantMap params);
+    void invoke(const QString &callbackID, const QString &action, const QVariantMap &params);
 
-    void chooseImage(QString callbackID, QVariantMap params);
-    void previewImage(QString callbackID, QVariantMap params);
+    void chooseImage(const QString &callbackID, const QVariantMap &params);
+    void previewImage(const QString &callbackID, const QVariantMap &params);
     //base64 转 QImage
     QImage base64ToImg(const QString& str);
 
@@ -39,7 +39,7 @@ private:
      * @return 成功则发送成功信号。
      *      失败则发送失败信号。
      */
-    void saveImageToPhotosAlbum(QString callbackID, QVariantMap params);
+    void saveImageToPhotosAlbum(const QString &callbackID, const QVariantMap &params);
 
 
     /**
@@ -48,12 +48,12 @@ private:
      * @return 成功则发送成功信号。
      *      失败则发送失败信号。
      */
-    void getImageInfo(QString callbackID, QVariantMap params);
+    void getImageInfo(const QString &callbackID, const QVariantMap &params);
 
 public slots:
     void chooseCancel();
-    void receiveUrls(QString filesPath);
-    void cameraSuccess(QString filePath);
+    void receiveUrls(const QString &filesPath);
+    void cameraSuccess(const QString &filePath);
     void cameraCancel();
     void albumCancel();
     void previewImageSuccess();

@@ -57,7 +57,7 @@ void Update::invokeInitialize()
     qDebug() << Q_FUNC_INFO  << "check" << NEW_VERSION_HEAD << CHECK_NEWVERSION << MY_APP_ID << endl;
 }
 
-void Update::invoke(QString callbackID, QString actionName, QVariantMap params)
+void Update::invoke(const QString &callbackID, const QString &actionName, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
 
@@ -70,7 +70,7 @@ void Update::invoke(QString callbackID, QString actionName, QVariantMap params)
     }
 }
 
-void Update::check(QString callbackID,QVariantMap params) // 开始检测是否有新版本可用
+void Update::check(const QString &callbackID, const QVariantMap &params) // 开始检测是否有新版本可用
 {
     qDebug() << Q_FUNC_INFO << params;
     checkCallBackID = callbackID.toLong();

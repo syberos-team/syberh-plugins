@@ -20,7 +20,7 @@ public:
     ~Update();
 
     void invokeInitialize();
-    void invoke(QString callbackID, QString actionName, QVariantMap params);
+    void invoke(const QString &callbackID, const QString &actionName, const QVariantMap &params);
 
 private :
 
@@ -31,7 +31,7 @@ private :
      * @return 成功则无返回。
      *      失败则返回错误码。
      */
-    void check(QString callbackID,QVariantMap params);
+    void check(const QString &callbackID, const QVariantMap &params);
 
     SyberH5HelpperPrivate *d;
     QString MY_APP_ID;

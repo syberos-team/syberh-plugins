@@ -9,7 +9,7 @@ App::App()
 {
 }
 
-void App::invoke(QString callbackID, QString actionName, QVariantMap params)
+void App::invoke(const QString &callbackID, const QString &actionName, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "## invoke hello plugin(4)!!!" << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
 
@@ -21,7 +21,7 @@ void App::invoke(QString callbackID, QString actionName, QVariantMap params)
     }
 }
 
-void App::setAppOrientation(QString callbackID, QVariantMap params)
+void App::setAppOrientation(const QString &callbackID, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "setAppOrientation****" << callbackID << params;
 

@@ -13,7 +13,7 @@ Image::Image()
 {
 }
 
-void Image::invoke(QString callbackID, QString actionName, QVariantMap params)
+void Image::invoke(const QString &callbackID, const QString &actionName, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
 
@@ -28,7 +28,7 @@ void Image::invoke(QString callbackID, QString actionName, QVariantMap params)
     }
 }
 
-void Image::chooseImage(QString callbackID, QVariantMap params)
+void Image::chooseImage(const QString &callbackID, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "params" << params;
     globalCallbackID = callbackID.toLong();
@@ -58,7 +58,7 @@ void Image::chooseCancel()
     globalCallbackID = 0;
 }
 
-void Image::receiveUrls(QString filesPath)
+void Image::receiveUrls(const QString &filesPath)
 {
     qDebug() << Q_FUNC_INFO << "receiveUrls***************" << filesPath;
 
@@ -76,7 +76,7 @@ void Image::receiveUrls(QString filesPath)
     globalCallbackID = 0;
 }
 
-void Image::cameraSuccess(QString filePath)
+void Image::cameraSuccess(const QString &filePath)
 {
     qDebug() << Q_FUNC_INFO << "cameraSuccess***************" << filePath;
 
@@ -105,7 +105,7 @@ void Image::albumCancel()
     globalCallbackID = 0;
 }
 
-void Image::previewImage(QString callbackID, QVariantMap params)
+void Image::previewImage(const QString &callbackID, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "params" << params;
     globalCallbackID = callbackID.toLong();
@@ -127,7 +127,7 @@ void Image::previewImageSuccess()
     globalCallbackID = 0;
 }
 
-void Image::saveImageToPhotosAlbum(QString callbackID, QVariantMap params)
+void Image::saveImageToPhotosAlbum(const QString &callbackID, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "params" << params << endl;
     globalCallbackID = callbackID.toLong();
@@ -239,7 +239,7 @@ void Image::saveImageToPhotosAlbum(QString callbackID, QVariantMap params)
 }
 
 
-void Image::getImageInfo(QString callbackID, QVariantMap params)
+void Image::getImageInfo(const QString &callbackID, const QVariantMap &params)
 {
     qDebug() << Q_FUNC_INFO << "params" << params << endl;
     globalCallbackID = callbackID.toLong();

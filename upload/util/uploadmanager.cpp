@@ -26,12 +26,12 @@ UploadManager::~UploadManager()
     m_multiPart = NULL;
 }
 
-void UploadManager::setUploadId(QString uploadId)
+void UploadManager::setUploadId(const QString &uploadId)
 {
     m_uploadId = uploadId;
 }
 
-void UploadManager::uploadFile(QVariantMap params)
+void UploadManager::uploadFile(const QVariantMap &params)
 {
 
     QString reqUrl = params.value("url").toString();
