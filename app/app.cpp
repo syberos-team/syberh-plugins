@@ -1,10 +1,16 @@
 #include "app.h"
 #include "app_p.h"
-#include "framework/common/errorinfo.h"
+#include "framework/common/projectconfig.h"
 #include "qmlmanager.h"
 #include <SyberosGuiCache>
+#include <QDBusInterface>
+#include <QDBusPendingReply>
 
 using namespace NativeSdk;
+
+const QString COMPOSITOR_IO_SERVICE ="com.syberos.iomanager";
+const QString COMPOSITOR_IO_PATH ="/com/syberos/compositor/IOManager";
+const QString COMPOSITOR_IO_INTERFACE ="com.syberos.compositor.IOManager";
 
 // ====== AppPrivate ======
 AppPrivate::AppPrivate(ExtensionSystem::SignalManager *signalManager, QObject *parent) 
@@ -39,7 +45,20 @@ void AppPrivate::setAppOrientation(const QString &callbackID, const QVariantMap 
 void AppPrivate::quit()
 {
     qDebug() << Q_FUNC_INFO << "即将退出应用..." ;
-    QTimer::singleShot(0, qApp, SLOT(quit()));
+
+    ProjectConfig *projectConfig = ProjectConfig::instance();
+
+    QString id = QString("%1/%2").arg(projectConfig->getSopid()).arg(projectConfig->getProjectName());
+    QStringList list;
+    list << id;
+
+    QDBusInterface manager(COMPOSITOR_IO_SERVICE, COMPOSITOR_IO_PATH, COMPOSITOR_IO_INTERFACE, QDBusConnection::systemBus());
+    QDBusPendingReply< void > reply = manager.call("quitApps", list);
+    reply.waitForFinished();
+    if (reply.isError()) {
+        QDBusError err = reply.error();
+        qWarning() << Q_FUNC_INFO << "quit failed:" << err.name() << err.message();
+    }
 }
 
 

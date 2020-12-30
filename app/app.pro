@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += gui widgets quick qml
+QT       += gui widgets quick qml dbus
 
 TARGET = app
 TEMPLATE = lib
