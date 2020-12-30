@@ -14,6 +14,7 @@ DEFINES += APP_LIBRARY
 SOURCES += app.cpp
 
 HEADERS += app.h\
+        app_p.h \
         app_global.h
 
 

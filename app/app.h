@@ -7,6 +7,8 @@
 #include "iplugin/iplugin.h"
 #include "app_global.h"
 
+class AppPrivate;
+
 class APPSHARED_EXPORT App: public ExtensionSystem::IPlugin
 {
     Q_OBJECT
@@ -17,9 +19,8 @@ public:
 
     void invoke(const QString &callbackID, const QString &actionName, const QVariantMap &params);
 
-    void setAppOrientation(const QString &callbackID, const QVariantMap &params);
-
-    void  quit();
+private:
+    AppPrivate *d;
 };
 
 #endif // APP_H
