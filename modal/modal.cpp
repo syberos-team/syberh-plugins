@@ -192,6 +192,10 @@ void Modal::toast(const QString &callbackID, const QVariantMap &params)
         return;
     }
 
+    if(toastQml != nullptr){
+        qmlManager.destroy(toastQml);
+        toastQml = nullptr;
+    }
     toastQml = qmlManager.create("qrc:/qml/SToast.qml", qmlManager.currentItem());
 
     QVariant result = qmlManager.call(toastQml, "show('"+ title + "','" + icon + "','" + duration +"')");
