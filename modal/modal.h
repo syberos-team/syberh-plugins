@@ -30,10 +30,10 @@ public:
 private:
     long globalCallbackID;
     QmlManager qmlManager;
-    QmlObject *alertQml;
-    QmlObject *confirmQml;
-    QmlObject *promptQml;
-    QmlObject *toastQml;
+    QmlObject *alertQml = nullptr;
+    QmlObject *confirmQml = nullptr;
+    QmlObject *promptQml = nullptr;
+    QmlObject *toastQml = nullptr;
 
 
 public slots:
