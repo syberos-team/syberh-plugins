@@ -6,6 +6,13 @@
 #include <QJsonDocument>
 #include "framework/common/errorinfo.h"
 #include "util/validator.h"
+#include "util/util.h"
+
+// 默认的 method
+#define _NET_DEF_METHOD "get"
+// 默认的 dateType
+#define _NET_DEF_DATATYPE "text"
+
 
 using namespace NativeSdk;
 
@@ -34,13 +41,11 @@ void Network::invoke(const QString &callbackID, const QString &actionName, const
         return;
     }
 
-    qDebug() << Q_FUNC_INFO << "NetWork callbackID is" << callbackID << "actionName is" << actionName << "params is" << params << endl;
-
     QString url = params.value("url").toString();
     QString method = params.value("method").toString();
-    if (method == "") {
+    if (method.isEmpty()) {
         qDebug() << Q_FUNC_INFO << "params type is null, set default values: get callbackID is " << callbackID << endl;
-        method = "get";
+        method = _NET_DEF_METHOD;
     }
 
     //检查url
@@ -52,19 +57,18 @@ void Network::invoke(const QString &callbackID, const QString &actionName, const
 
 
     QString dataType = params.value("dataType").toString();
-    if (dataType == "") {
-        dataType = "json";
+    if (dataType.isEmpty()) {
+        dataType = _NET_DEF_DATATYPE;
     }
 
-    if (dataType.toLower() != "json" && dataType.toLower() != "text") {
+    if (!Util::Equals(dataType, "json", true) && !Util::Equals(dataType, "text", true)) {
         signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, ErrorInfo::message(ErrorInfo::InvalidParameter, "dataType"));
         return;
     }
 
     QNetworkRequest request;
 
-    QString urlAddr = url.toLower();
-    if (urlAddr.startsWith("https")) {
+    if (url.startsWith("https", Qt::CaseInsensitive)) {
         QSslConfiguration config;
         config.setPeerVerifyMode(QSslSocket::VerifyNone);
         config.setProtocol(QSsl::UnknownProtocol);
@@ -88,9 +92,9 @@ void Network::invoke(const QString &callbackID, const QString &actionName, const
 
     QNetworkReply *reply;
 
-    if ("get" == method.toLower()) {
+    if (Util::Equals(method, "get", true)) {
         reply = manager->get(request);
-    } else if ("post" == method.toLower()) {
+    } else if (Util::Equals(method, "post", true)) {
         QVariantMap data = params.value("data").toMap();
         QVariantMap::Iterator it = data.begin();
         QString content;
@@ -102,7 +106,7 @@ void Network::invoke(const QString &callbackID, const QString &actionName, const
             }
         }
         reply = manager->post(request, content.toUtf8());
-    } else if ("put" == method.toLower()) {
+    } else if (Util::Equals(method, "put", true)) {
         QVariantMap data = params.value("data").toMap();
         QVariantMap::Iterator it = data.begin();
         QString content;
@@ -114,7 +118,7 @@ void Network::invoke(const QString &callbackID, const QString &actionName, const
             }
         }
         reply = manager->put(request, content.toUtf8());
-    } else if ("delete" == method.toLower()) {
+    } else if (Util::Equals(method, "delete", true)) {
         reply = manager->deleteResource(request);
     } else {
         signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, ErrorInfo::message(ErrorInfo::InvalidParameter, "type"));
@@ -170,7 +174,7 @@ void Network::finished(QNetworkReply *reply)
     QJsonObject json;
     json.insert("statusCode", statusCode.toString());
     json.insert("header", headers);
-    if (datatype.toLower() == "json") {
+    if (Util::Equals(datatype, "json", true)) {
       json.insert("data", QJsonDocument::fromJson(result.toLocal8Bit().data()).object());
       signalManager()->success(callbackID.toLong(), json);
     } else {
