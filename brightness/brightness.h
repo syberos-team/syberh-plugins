@@ -47,11 +47,7 @@ private :
     void setAmbientLightSensorEnabled(const QString &callbackID, const QVariantMap &params);
 
     /**
-     * @brief setBlankTimeout 设置息屏时长。
-     * @param callBackID 获取手机信息的任务Id
-     * @param params 参数 要设置时长，单位秒。
-     * @return 成功则无返回。
-     *      失败则返回错误码。
+     * @brief setBlankTimeout 同setDimTimeout。
      */
     void setBlankTimeout(const QString &callbackID, const QVariantMap &params);
 
@@ -65,9 +61,9 @@ private :
     void setBrightness(const QString &callbackID, const QVariantMap &params);
 
     /**
-     * @brief :setDimTimeout 设置无操作时屏幕进入暗屏状态的时长。
+     * @brief :setDimTimeout 设置息屏时长。
      * @param callBackID 获取手机信息的任务Id
-     * @param params 参数 设置要暗屏时长，单位秒。
+     * @param params 参数 息屏时长，单位秒，仅支持固定的时间。
      * @return 成功则无返回。
      *      失败则返回错误码。
      */
