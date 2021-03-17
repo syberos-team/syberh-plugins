@@ -53,12 +53,27 @@ void Database::query(const QString &callbackID, const QVariantMap &params){
     QString err;
     DB_NCHECK(private_.connect(&err), callbackID, ErrorInfo::SystemError, err)
 
+    QVariant paramsVar = params.value("params");
+
     QJsonArray jsonArray;
-    private_.queryMap(sql, [&jsonArray](int rowNum, const QMap<QString,QVariant> &rowMap){
+    auto rowMapFunc = [&jsonArray](int rowNum, const QMap<QString,QVariant> &rowMap){
         Q_UNUSED(rowNum)
         QJsonObject jsonObj = QJsonObject::fromVariantMap(rowMap);
         jsonArray.append(jsonObj);
-    }, &err);
+    };
+    // 无参数sql
+    if(!paramsVar.isValid()){
+        private_.queryMap(sql, rowMapFunc, &err);
+    }else if(paramsVar.canConvert<QVariantList>()){
+        private_.queryMap(sql, paramsVar.toList(), rowMapFunc, &err);
+    }else if(paramsVar.canConvert<QVariantMap>()){
+        private_.queryMap(sql, paramsVar.toMap(), rowMapFunc, &err);
+    }else if(paramsVar.canConvert<IndexMap>()){
+        private_.queryMap(sql, paramsVar.value<IndexMap>(), rowMapFunc, &err);
+    }else{
+        signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "sql参数格式错误");
+        return;
+    }
 
     qDebug() << Q_FUNC_INFO << "result:" << jsonArray;
     signalManager()->success(callbackID.toLong(), QVariant(jsonArray));

@@ -151,7 +151,29 @@ bool DatabasePrivate::query(const QString &sql, CellRecordHandleFunc cellHandle,
     return true;
 }
 
-bool DatabasePrivate::query(const QString &sql, const QMap<int,QVariant> &params, CellRecordHandleFunc cellHandle, QString *err)
+bool DatabasePrivate::query(const QString &sql, const QVariantList &params, CellRecordHandleFunc cellHandle, QString *err)
+{
+    DB_P_CHECK_SQL(sql, err, return false)
+    DB_P_CHECK_PARAMS(sql, err, return false)
+
+    DB_P_OPEN(m_conn, err, return false)
+    DB_P_QUERY_PREPARE(query, m_conn, sql, err, return false)
+    DB_P_PREPARE_BIND_LIST(query, params)
+    DB_P_EXEC(query, err, return false)
+
+    int rowNum = 0;
+    while(query.next()) {
+        QSqlRecord rec = query.record();
+        for(int i = 0 ; i<rec.count(); ++i){
+            cellHandle(rowNum, i, rec);
+        }
+        rowNum++;
+    }
+    return true;
+}
+
+
+bool DatabasePrivate::query(const QString &sql, const IndexMap &params, CellRecordHandleFunc cellHandle, QString *err)
 {
     DB_P_CHECK_SQL(sql, err, return false)
     DB_P_CHECK_PARAMS(sql, err, return false)
@@ -172,7 +194,7 @@ bool DatabasePrivate::query(const QString &sql, const QMap<int,QVariant> &params
     return true;
 }
 
-bool DatabasePrivate::query(const QString &sql, const QMap<QString,QVariant> &params, CellRecordHandleFunc cellHandle, QString *err)
+bool DatabasePrivate::query(const QString &sql, const QVariantMap &params, CellRecordHandleFunc cellHandle, QString *err)
 {
     DB_P_CHECK_SQL(sql, err, return false)
     DB_P_CHECK_PARAMS(sql, err, return false)
@@ -214,7 +236,32 @@ bool DatabasePrivate::queryMap(const QString &sql, RowMapHandleFunc rowHandle, Q
     return true;
 }
 
-bool DatabasePrivate::queryMap(const QString &sql, const QMap<int,QVariant> &params, RowMapHandleFunc rowHandle, QString *err)
+
+bool DatabasePrivate::queryMap(const QString &sql, const QVariantList &params, RowMapHandleFunc rowHandle, QString *err)
+{
+    DB_P_CHECK_SQL(sql, err, return false)
+    DB_P_CHECK_PARAMS(params, err, return false)
+
+    DB_P_OPEN(m_conn, err, return false)
+    DB_P_QUERY_PREPARE(query, m_conn, sql, err, return false)
+    DB_P_PREPARE_BIND_LIST(query, params)
+    DB_P_EXEC(query, err, return false)
+
+    int rowNum = 0;
+    while(query.next()) {
+        QSqlRecord rec = query.record();
+        QVariantMap rowMap;
+        for(int i = 0 ; i<rec.count(); ++i){
+            rowMap.insert(rec.fieldName(i), rec.value(i));
+        }
+        rowHandle(rowNum, rowMap);
+        rowNum++;
+    }
+    return true;
+}
+
+
+bool DatabasePrivate::queryMap(const QString &sql, const IndexMap &params, RowMapHandleFunc rowHandle, QString *err)
 {
     DB_P_CHECK_SQL(sql, err, return false)
     DB_P_CHECK_PARAMS(params, err, return false)
@@ -237,7 +284,7 @@ bool DatabasePrivate::queryMap(const QString &sql, const QMap<int,QVariant> &par
     return true;
 }
 
-bool DatabasePrivate::queryMap(const QString &sql, const QMap<QString,QVariant> &params, RowMapHandleFunc rowHandle, QString *err)
+bool DatabasePrivate::queryMap(const QString &sql, const QVariantMap &params, RowMapHandleFunc rowHandle, QString *err)
 {
     DB_P_CHECK_SQL(sql, err, return false)
     DB_P_CHECK_PARAMS(params, err, return false)
@@ -273,7 +320,7 @@ bool DatabasePrivate::exec(const QString &sql, QString *err)
 }
 
 
-bool DatabasePrivate::exec(const QString &sql, const QList<QVariant> &params, QString *err)
+bool DatabasePrivate::exec(const QString &sql, const QVariantList &params, QString *err)
 {
     DB_P_CHECK_SQL(sql, err, return false)
     DB_P_CHECK_PARAMS(params, err, return false)
@@ -286,7 +333,7 @@ bool DatabasePrivate::exec(const QString &sql, const QList<QVariant> &params, QS
 }
 
 
-bool DatabasePrivate::exec(const QString &sql, const QMap<int,QVariant> &params, QString *err)
+bool DatabasePrivate::exec(const QString &sql, const IndexMap &params, QString *err)
 {
     DB_P_CHECK_SQL(sql, err, return false)
     DB_P_CHECK_PARAMS(params, err, return false)
@@ -298,7 +345,7 @@ bool DatabasePrivate::exec(const QString &sql, const QMap<int,QVariant> &params,
     return true;
 }
 
-bool DatabasePrivate::exec(const QString &sql, const QMap<QString,QVariant> &params, QString *err)
+bool DatabasePrivate::exec(const QString &sql, const QVariantMap &params, QString *err)
 {
     DB_P_CHECK_SQL(sql, err, return false)
     DB_P_CHECK_PARAMS(params, err, return false)
