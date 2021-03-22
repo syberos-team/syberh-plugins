@@ -36,10 +36,10 @@ void Network::invoke(const QString &callbackID, const QString &actionName, const
     qDebug() << Q_FUNC_INFO << "  callbackID:" << callbackID << "actionName:" << actionName << "params:" << params;
 
     // 检查网络
-    if (!Validator::netWorkConnected()) {
-        signalManager()->failed(callbackID.toLong(), ErrorInfo::NetworkError, ErrorInfo::message(ErrorInfo::NetworkError, "请检查网络状态"));
-        return;
-    }
+    // if (!Validator::netWorkConnected()) {
+    //     signalManager()->failed(callbackID.toLong(), ErrorInfo::NetworkError, ErrorInfo::message(ErrorInfo::NetworkError, "请检查网络状态"));
+    //     return;
+    // }
 
     QString url = params.value("url").toString();
     QString method = params.value("method").toString();
