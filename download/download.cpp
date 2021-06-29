@@ -79,7 +79,7 @@ void Download::start(const QString &callbackId, const QString &url, const QStrin
     globalCallbackID = callbackId.toLong();
 
     // 检查网络
-    if (!Validator::netWorkConnected()) {
+    if (!Validator::isNetworkConnected()) {
         signalManager()->failed(globalCallbackID, ErrorInfo::NetworkError, ErrorInfo::message(ErrorInfo::NetworkError, "请检查网络状态"));
         globalCallbackID = 0;
         return;
