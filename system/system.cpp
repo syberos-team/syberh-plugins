@@ -58,7 +58,6 @@ void System::aboutPhone(const QString &callbackID, const QVariantMap &params){
     COsInfo info;
     QJsonValue kernelVersion = QJsonValue::fromVariant(info.kernelVersion());
     QJsonValue osVersion = QJsonValue::fromVariant(info.osVersion());
-    QJsonValue osVersionCode = QJsonValue::fromVariant(info.osVersionCode());
     QJsonValue softwareVersion = QJsonValue::fromVariant(info.softwareVersion());
     QScreen *screen = QGuiApplication::primaryScreen();
     QRect mm = screen->availableGeometry() ;
@@ -81,7 +80,6 @@ void System::aboutPhone(const QString &callbackID, const QVariantMap &params){
     jsonObject.insert("osType", "Syber");//操作系统名称
     jsonObject.insert("osVersionName", softwareVersion);//操作系统版本名称
     jsonObject.insert("osVersion", osVersion);//操作系统版本号
-    jsonObject.insert("osVersionCode", osVersionCode);//操作系统小版本号
     jsonObject.insert("platformVersionName", "");//运行平台版本名称
     jsonObject.insert("platformVersionCode", "");//运行平台版本号
     jsonObject.insert("kernelVersion", kernelVersion);//内核版本号
@@ -101,54 +99,22 @@ void System::aboutPhone(const QString &callbackID, const QVariantMap &params){
     signalManager()->success(callbackID.toLong(), QVariant(jsonObject));
 }
 
-
-void System::setVirtualPanel(const QString &callbackID, const QVariantMap &params){
-    Q_UNUSED(callbackID);
-    Q_UNUSED(params);
-
-    qDebug() << Q_FUNC_INFO << "callbackID:" << callbackID << ", params: " << params << endl;
-    
-    bool visible= params.value("visible").toBool();
-    QDBusMessage dbusMessage = QDBusMessage::createMethodCall(COMPOSITOR_SERVICE_NAME,
-                                                              COMPOSITOR_OBJECT_PATH,
-                                                              COMPOSITOR_INTERFACE_NAME,
-                                                              "setVirtualPanelVisible");
-    dbusMessage << visible;
-    qDebug() << QDBusConnection::systemBus().send(dbusMessage);
-
-
-
-    QJsonObject jsonObject;
-    jsonObject.insert("visible", visible);
-   
-    
-    QJsonValue jsonObjectValue = QJsonValue::fromVariant(jsonObject);
-
-    qDebug() << Q_FUNC_INFO << "jsonObject:" << jsonObject << ", jsonObjectValue: " << jsonObjectValue << endl;
-
-    signalManager()->success(callbackID.toLong(), QVariant(jsonObject));
-}
-
-
 void System::setDate(const QString &callbackID, const QVariantMap &params){
     Q_UNUSED(callbackID);
     Q_UNUSED(params);
 
     qDebug() << Q_FUNC_INFO << "callbackID:" << callbackID << ", params: " << params << endl;
      QString date = params.value("date").toString();
-   
-    QDBusMessage dbusMessage = QDBusMessage::createMethodCall(COMPOSITOR_SERVICE_NAME,
-                                                              COMPOSITOR_OBJECT_PATH,
-                                                              COMPOSITOR_INTERFACE_NAME,
-                                                              "setTime");
+
     QDateTime dt = QDateTime::fromString(date, "yyyy-MM-dd hh:mm:ss");
     qDebug() << "time " << dt.toString();
-    dbusMessage << dt.toString();
-    qDebug() << QDBusConnection::systemBus().send(dbusMessage);
+
+    CTime time;
+    time.setTime(dt);
 
     QJsonObject jsonObject;
     jsonObject.insert("date", date);
-    
+
     QJsonValue jsonObjectValue = QJsonValue::fromVariant(jsonObject);
 
     qDebug() << Q_FUNC_INFO << "jsonObject:" << jsonObject << ", jsonObjectValue: " << jsonObjectValue << endl;
