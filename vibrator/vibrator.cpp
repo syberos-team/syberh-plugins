@@ -7,6 +7,7 @@
 
 using namespace NativeSdk;
 
+bool Vibrator::vibratorState = false;
 
 Vibrator::Vibrator()
 {
@@ -84,6 +85,9 @@ void Vibrator::vibrate(const QString &callbackID, const QVariantMap &params){
     if(!vibratingEnabled){
         profile->setVibratingEnabled(true);
     }
+
+    //保存记录的震动状态
+    vibratorState = vibratingEnabled;
 
     //连接震动服务
     bool isConnected = client->isConnected();
@@ -195,7 +199,7 @@ void Vibrator::eventCompleted(quint32 eventId){
 
     bool vibratingEnabled = profile->vibratingEnabled();
     if(vibratingEnabled){
-        profile->setVibratingEnabled(false);
+        profile->setVibratingEnabled(vibratorState);
     }
 }
 void Vibrator::eventPlaying(quint32 eventId){

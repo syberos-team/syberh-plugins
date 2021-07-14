@@ -24,6 +24,7 @@ public:
 
 private :
     long globalCallbackID;
+    static bool vibratorState;
 
     /**
      * @brief changeCameraImagePath 触发震动
