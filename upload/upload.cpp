@@ -98,7 +98,7 @@ void Upload::start(const QString &callbackID, const QVariantMap &params)
     }
     if(!QFile::exists(filePath)) {
         qDebug() << Q_FUNC_INFO << "文件地址不存在：" << filePath << endl;
-        signalManager()->failed(callbackID.toLong(), ErrorInfo::SystemError, "文件不存在");
+        signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidParameter, "文件不存在");
         return;
     }
     // name为空时使用默认值file

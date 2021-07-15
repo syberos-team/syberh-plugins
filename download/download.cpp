@@ -166,7 +166,7 @@ void Download::cancel(const QString &callbackId, const QString &downloadID) {
         return;
     }
     if (!tasks.contains(downloadID)) {
-        signalManager()->failed(globalCallbackID, ErrorInfo::CannelFailed, ErrorInfo::message(ErrorInfo::CannelFailed, "任务不存在或已完成"));
+        signalManager()->failed(globalCallbackID, ErrorInfo::InvalidCall, "任务不存在或已完成");
         globalCallbackID = 0;
         return;
     }
