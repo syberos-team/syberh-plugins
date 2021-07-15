@@ -50,8 +50,6 @@ public:
     void tableExists(const QString &callbackID, const QVariantMap &params);
 
 private:
-    QSqlDatabase myConnection;
-
     // app data存放位置
     QString dataDir;
 };

@@ -55,7 +55,7 @@ NetworkPrivate* NetworkPrivate::New(const QString &callbackID, QObject *parent)
 
 NetworkPrivate* NetworkPrivate::setCookies(const QVariantMap &cookies)
 {
-    if(!cookies.isEmpty()){
+    if(cookies.isEmpty()){
         return this;
     }
     QMapIterator<QString,QVariant> it(cookies);
@@ -125,7 +125,7 @@ void NetworkPrivate::request()
     if(!setRequestHeaders(req, m_headers)){
         return;
     }
-    if(!setRequestCookies()){
+    if(!setRequestCookies(req)){
         return;
     }
     QByteArray requestData;
@@ -225,13 +225,17 @@ bool NetworkPrivate::checkRequestData(QByteArray *outData)
     return true;
 }
 
-bool NetworkPrivate::setRequestCookies()
+bool NetworkPrivate::setRequestCookies(QNetworkRequest &request)
 {
     if(m_cookies.isEmpty()){
         return true;
     }
     m_cookieJar->setCookies(m_cookies);
     m_manager->setCookieJar(m_cookieJar.data());
+
+    QVariant var;
+    var.setValue(m_cookies);
+    request.setHeader(QNetworkRequest::CookieHeader, var);
     return true;
 }
 

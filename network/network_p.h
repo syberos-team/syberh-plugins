@@ -80,7 +80,7 @@ private:
     bool checkRequestMethod(QString *outMethod);
     bool setRequestHeaders(QNetworkRequest &request, const QVariantMap &headers);
     bool checkRequestData(QByteArray *outData);
-    bool setRequestCookies();
+    bool setRequestCookies(QNetworkRequest &request);
 
     Method toMethod(const QString &);
     DataType toDataType(const QString &);
