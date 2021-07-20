@@ -30,6 +30,7 @@ private:
     long m_callbackID;
     QScopedPointer<QNetworkAccessManager> m_networkAccessManager;
     QScopedPointer<QNetworkReply> m_reply;
+    bool m_checking;
 };
 
 #endif

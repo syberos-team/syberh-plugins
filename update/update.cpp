@@ -71,7 +71,7 @@ void supportSsl(QNetworkRequest &request)
 }
 
 // UpdatePrivate
-UpdatePrivate::UpdatePrivate(Update *update) : p(update)
+UpdatePrivate::UpdatePrivate(Update *update) : p(update), m_checking(false)
 {
 }
 
@@ -83,6 +83,12 @@ UpdatePrivate::~UpdatePrivate()
 
 void UpdatePrivate::checkNewVersion(const QString &callbackID)
 {
+    if(m_checking){
+        qDebug() << Q_FUNC_INFO << "checking new version";
+        p->signalManager()->failed(callbackID.toLong(), ErrorInfo::InvalidCall, "正在检查版本");
+        return;
+    }
+    m_checking = true;
     m_networkAccessManager.reset(new QNetworkAccessManager);
     QNetworkConfiguration configure = m_networkAccessManager->activeConfiguration();
     configure.setConnectTimeout(U_CONN_TIMEOUT);
@@ -121,6 +127,7 @@ void UpdatePrivate::clear()
 {
     m_reply.reset();
     m_networkAccessManager.reset();
+    m_checking = false;
 }
 
 
