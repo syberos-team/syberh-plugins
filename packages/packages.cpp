@@ -62,7 +62,7 @@ void Packages::openUrl(const QString &callbackID, const QString &scheme, const Q
     if (schemeList.value(1).indexOf("openPage") >= 0) {
         openPage(callbackID, scheme, path, params);
     } else {
-        qApp->openUrl(scheme + path);
+        qApp->openUrl(scheme);
         signalManager()->success(callbackID.toLong(), "success");
     }
 }
