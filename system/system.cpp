@@ -14,6 +14,7 @@
 #include <ctime.h>
 #include <QDBusConnection>
 #include <QDBusMessage>
+#include <framework/ctime.h>
 
 
 
@@ -106,12 +107,18 @@ void System::setDate(const QString &callbackID, const QVariantMap &params){
     qDebug() << Q_FUNC_INFO << "callbackID:" << callbackID << ", params: " << params << endl;
      QString date = params.value("date").toString();
 
+   /* QDBusMessage dbusMessage = QDBusMessage::createMethodCall(COMPOSITOR_SERVICE_NAME,
+                                                              COMPOSITOR_OBJECT_PATH,
+                                                              COMPOSITOR_INTERFACE_NAME,
+                                                              "setTime");
     QDateTime dt = QDateTime::fromString(date, "yyyy-MM-dd hh:mm:ss");
     qDebug() << "time " << dt.toString();
-
+    dbusMessage << dt.toString();
+    qDebug() << QDBusConnection::systemBus().send(dbusMessage);
+*/
     CTime time;
+    QDateTime dt = QDateTime::fromString(date, "yyyy-MM-dd hh:mm:ss");
     time.setTime(dt);
-
     QJsonObject jsonObject;
     jsonObject.insert("date", date);
 

@@ -1,0 +1,12 @@
+#ifndef STORAGESPACE_GLOBAL_H
+#define STORAGESPACE_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(STORAGESPACE_LIBRARY)
+#  define STORAGESPACE_EXPORT Q_DECL_EXPORT
+#else
+#  define STORAGESPACE_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // STORAGESPACE_GLOBAL_H

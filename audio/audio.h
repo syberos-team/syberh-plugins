@@ -54,8 +54,22 @@ public:
      */
     void stop(const QString &callbackID, const QVariantMap &params);
 
+    /**
+     * @brief gettime 获取音频总秒数
+     * @param params 参数
+     * @return 成功则无返回
+     *         失败则返回错误码
+     */
+    void getTotalTime(const QString &callbackID, const QVariantMap &params);
+
+
+private slots:
+    void getDuration(qint64 duration);
+
 private :
     QMediaPlayer *player;
+
+    QString m_sCallbackID;
 };
 
 #endif // AUDIO_H
