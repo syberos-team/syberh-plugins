@@ -30,6 +30,14 @@ void FileManager::invoke(const QString &callbackID, const QString &actionName, c
     } else if (actionName == "remove") {
         bool ok;
         remove(callbackID, params.value("srcPath").toString(), params.value("recursive").toString().toInt(&ok,10));
+    } else if (actionName == "mkdir"){
+        mkdir(callbackID, params.value("destPath").toString());
+    } else if (actionName == "mkfile"){
+        mkfile(callbackID, params.value("destPath").toString());
+    } else if (actionName == "compress"){
+        compress(callbackID, params.value("destName").toString(), params.value("destPath").toString());
+    } else if (actionName == "decompress"){
+        decompress(callbackID, params.value("destPath").toString());
     }
 }
 
@@ -100,3 +108,80 @@ void FileManager::remove(const QString &callbackID, const QString &srcPath, int 
         signalManager()->failed(callbackID.toLong(), resp.code, resp.msg);
     }
 }
+
+void FileManager::mkdir(const QString &callbackID, const QString &destPath)
+{
+    RespResult resp = FileUtil::mkdir(destPath);
+    if (resp.flag) {
+        QJsonObject jsonObj;
+        jsonObj.insert("result", resp.flag);
+        signalManager()->success(callbackID.toLong(), jsonObj);
+    } else {
+        signalManager()->failed(callbackID.toLong(), resp.code, resp.msg);
+    }
+}
+
+void FileManager::mkfile(const QString &callbackID, const QString &destPath)
+{
+    RespResult resp = FileUtil::mkfile(destPath);
+    if (resp.flag) {
+        QJsonObject jsonObj;
+        jsonObj.insert("result", resp.flag);
+        signalManager()->success(callbackID.toLong(), jsonObj);
+    } else {
+        signalManager()->failed(callbackID.toLong(), resp.code, resp.msg);
+    }
+}
+
+void FileManager::compress(const QString &callbackID, const QString &destName, const QString &destPath)
+{
+    RespResult resp = FileUtil::compress(destName, destPath);
+    if (resp.flag) {
+        QJsonObject jsonObj;
+        jsonObj.insert("result", resp.flag);
+        signalManager()->success(callbackID.toLong(), jsonObj);
+    } else {
+        signalManager()->failed(callbackID.toLong(), resp.code, resp.msg);
+    }
+}
+
+void FileManager::decompress(const QString &callbackID, const QString &destPath)
+{
+    RespResult resp = FileUtil::decompress(destPath);
+    if (resp.flag) {
+        QJsonObject jsonObj;
+        jsonObj.insert("result", resp.flag);
+        signalManager()->success(callbackID.toLong(), jsonObj);
+    } else {
+        signalManager()->failed(callbackID.toLong(), resp.code, resp.msg);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

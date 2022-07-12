@@ -1,11 +1,12 @@
 #include <QDebug>
 #include <QtPlugin>
+#include <QJsonObject>
 #include "audio.h"
 #include "framework/common/errorinfo.h"
 #include "helper.h"
 
 using namespace NativeSdk;
-
+#include <QThread>
 
 Audio::Audio(){
 }
@@ -17,6 +18,7 @@ Audio::~Audio(){
 void Audio::invokeInitialize()
 {
     player = new QMediaPlayer();
+    connect(player,&QMediaPlayer::durationChanged,this,&Audio::getDuration,Qt::DirectConnection);
 }
 
 void Audio::invoke(const QString &callbackID, const QString &actionName, const QVariantMap &params)
@@ -31,7 +33,8 @@ void Audio::invoke(const QString &callbackID, const QString &actionName, const Q
         resume(callbackID,params);
     }else if(actionName == "stop"){
         stop(callbackID,params);
-    }
+    }else if(actionName == "getTotalTime")
+        getTotalTime(callbackID, params);
 }
 
 void Audio::start(const QString &callbackID, const QVariantMap &params){
@@ -111,6 +114,27 @@ void Audio::resume(const QString &callbackID, const QVariantMap &params){
     }
     signalManager()->success(callbackID.toLong(), true);
 }
+
+
+void Audio::getTotalTime(const QString &callbackID, const QVariantMap &params)
+{
+    qDebug() << Q_FUNC_INFO << "gettime111:" << params << endl;
+    m_sCallbackID = callbackID;
+    QString filePath = params.value("path").toString();
+   player->setMedia(QUrl::fromLocalFile(filePath));
+   player->duration();
+}
+
+void Audio::getDuration(qint64 duration)
+{
+
+    qDebug() << Q_FUNC_INFO << "duration !!!!!!!" << duration;
+    QJsonObject json;
+    json.insert("totalTime", duration);
+    signalManager()->success(m_sCallbackID.toLong(), json);
+}
+
+
 
 void Audio::stop(const QString &callbackID, const QVariantMap &params){
     qDebug() << Q_FUNC_INFO << "stop" << params << endl;

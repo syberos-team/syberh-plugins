@@ -55,6 +55,35 @@ private :
      */
     void remove(const QString &callbackID, const QString &srcPath, int recursive);
 
+    /**
+     * @brief mkdir          创建文件夹
+     * @param callbackID
+     * @param destPath       目标路径
+     */
+    void mkdir(const QString &callbackID, const QString &destPath);
+
+    /**
+     * @brief mkfile          创建文件
+     * @param callbackID
+     * @param destPath       目标路径
+     */
+    void mkfile(const QString &callbackID, const QString &destPath);
+
+    /**
+     * @brief compress       压缩文件
+     * @param destName       压缩文件的名字
+     * @param callbackID
+     * @param destPath       目标路径
+     */
+    void compress(const QString &callbackID, const QString &destName, const QString &destPath);
+
+    /**
+     * @brief decompress     解压文件
+     * @param callbackID
+     * @param destPath       目标路径
+     */
+    void decompress(const QString &callbackID, const QString &destPath);
+
 };
 
 #endif // FILEMANAGER_H
